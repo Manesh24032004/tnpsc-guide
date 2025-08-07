@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Upload, Eye, Edit, Trash2, FileText, Users, Settings } from 'lucide-react';
+import { Upload, Eye, Edit, Trash2, FileText, Users, LogOut } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,10 +9,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
 
 const Admin = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [uploadForm, setUploadForm] = useState({
     title: '',
     description: '',
@@ -26,24 +25,6 @@ const Admin = () => {
     { id: 2, title: '2024 Previous Paper', category: 'previous-papers', uploadDate: '2024-01-10', downloads: 89 },
     { id: 3, title: 'Tamil Literature Book', category: 'books', uploadDate: '2024-01-08', downloads: 201 },
   ]);
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Simple authentication - in real app, use proper authentication
-    if (loginForm.email === 'admin@tnpsc.com' && loginForm.password === 'admin123') {
-      setIsAuthenticated(true);
-      toast({
-        title: "Login Successful",
-        description: "Welcome to the admin dashboard!",
-      });
-    } else {
-      toast({
-        title: "Login Failed",
-        description: "Invalid credentials. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
 
   const handleFileUpload = (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,59 +47,13 @@ const Admin = () => {
     setUploadForm({ title: '', description: '', category: '', file: null });
   };
 
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gradient-soft flex items-center justify-center p-4">
-        <Card className="w-full max-w-md p-8 shadow-elegant">
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
-              <Settings className="h-8 w-8 text-primary-foreground" />
-            </div>
-            <h1 className="text-2xl font-bold text-primary">Admin Login</h1>
-            <p className="text-muted-foreground">Access the admin dashboard</p>
-          </div>
-
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={loginForm.email}
-                onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
-                placeholder="admin@tnpsc.com"
-                required
-              />
-            </div>
-            
-            <div>
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={loginForm.password}
-                onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-                placeholder="Enter password"
-                required
-              />
-            </div>
-            
-            <Button type="submit" className="w-full">
-              Login to Dashboard
-            </Button>
-          </form>
-          
-          <div className="mt-4 text-center text-sm text-muted-foreground">
-            <p>Demo Credentials:</p>
-            <p>Email: admin@tnpsc.com</p>
-            <p>Password: admin123</p>
-          </div>
-        </Card>
-      </div>
-    );
-  }
+  const handleLogout = () => {
+    localStorage.removeItem('adminAuthenticated');
+    window.location.href = '/';
+  };
 
   return (
+    <ProtectedRoute>
     <div className="min-h-screen bg-gradient-soft">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
@@ -271,13 +206,16 @@ const Admin = () => {
         <div className="mt-8 text-center">
           <Button 
             variant="outline" 
-            onClick={() => setIsAuthenticated(false)}
+            onClick={handleLogout}
+            className="flex items-center gap-2"
           >
+            <LogOut className="h-4 w-4" />
             Logout
           </Button>
         </div>
       </div>
     </div>
+    </ProtectedRoute>
   );
 };
 

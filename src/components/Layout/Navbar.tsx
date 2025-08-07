@@ -15,10 +15,9 @@ import { Link, useLocation } from 'react-router-dom';
 const navigationItems = [
   { href: '/', label: 'Home', icon: '🏠' },
   { href: '/syllabus', label: 'Syllabus', icon: '📚' },
-  { href: '/previous-papers', label: 'Previous Papers', icon: '📝' },
+  { href: '/previous-papers', label: 'Past Year Questions', icon: '📝' },
   { href: '/books', label: 'Books', icon: '📖' },
   { href: '/poets', label: 'அறிஞர்கள்', icon: '🎭' },
-  { href: '/admin', label: 'Admin', icon: '⚙️' },
 ];
 
 export const Navbar = () => {
