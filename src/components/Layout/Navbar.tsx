@@ -14,10 +14,12 @@ import { Link, useLocation } from 'react-router-dom';
 
 const navigationItems = [
   { href: '/', label: 'Home', icon: '🏠' },
-  { href: '/syllabus', label: 'Syllabus', icon: '📚' },
-  { href: '/previous-papers', label: 'Past Year Questions', icon: '📝' },
-  { href: '/books', label: 'Books', icon: '📖' },
-  { href: '/poets', label: 'அறிஞர்கள்', icon: '🎭' },
+  { href: '/uploads', label: 'Upload PDFs', icon: '📤' },
+  { href: '/model-papers', label: 'Model Question Papers', icon: '📋' },
+  { href: '/tirukural', label: 'திருக்குறள்', icon: '📜' },
+  { href: '/tamil-syllabus', label: 'Tamil Syllabus Topics', icon: '📝' },
+  { href: '/general-studies', label: 'General Studies Syllabus', icon: '🌟' },
+  { href: '/maths-syllabus', label: 'Maths Syllabus', icon: '🔢' },
 ];
 
 export const Navbar = () => {
