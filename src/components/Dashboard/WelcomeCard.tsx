@@ -8,12 +8,12 @@ export const WelcomeCard = () => {
       <div className="flex items-center justify-center gap-3 mb-4">
         <GraduationCap className="h-12 w-12" />
         <h1 className="text-4xl font-bold">
-          Group IV Easy Learning
+          TNPSC wizard
         </h1>
       </div>
       
       <p className="text-xl text-primary-foreground/90 mb-6">
-        Simple and easy way to learn!
+        Your magical guide to TNPSC success
       </p>
       
       <Button 
