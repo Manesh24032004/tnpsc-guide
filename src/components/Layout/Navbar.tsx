@@ -20,6 +20,7 @@ const navigationItems = [
   { href: '/tamil-syllabus', label: 'Tamil Syllabus Topics', icon: '📝' },
   { href: '/general-studies', label: 'General Studies Syllabus', icon: '🌟' },
   { href: '/maths-syllabus', label: 'Maths Syllabus', icon: '🔢' },
+  { href: '/admin', label: 'Admin Login', icon: '⚙️' },
 ];
 
 export const Navbar = () => {
