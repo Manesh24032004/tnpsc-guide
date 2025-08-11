@@ -2,6 +2,13 @@ import { FileText, Book } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
+// Import images
+import tamilBookImg from '@/assets/tamil-book.jpg';
+import mathsBookImg from '@/assets/maths-book.jpg';
+import scienceBookImg from '@/assets/science-book.jpg';
+import socialBookImg from '@/assets/social-book.jpg';
+import tamilPoetsImg from '@/assets/tamil-poets.jpg';
+
 const previousYearQuestions = [
   { name: '2025 G-IV', year: '2025' },
   { name: '2025 G-1', year: '2025' },
@@ -11,10 +18,10 @@ const previousYearQuestions = [
 ];
 
 const books = [
-  { name: 'Tamil', subject: 'Language' },
-  { name: 'Maths', subject: 'Mathematics' },
-  { name: 'Science', subject: 'Science' },
-  { name: 'Social Science', subject: 'Social Studies' },
+  { name: 'Tamil', subject: 'Language', image: tamilBookImg },
+  { name: 'Maths', subject: 'Mathematics', image: mathsBookImg },
+  { name: 'Science', subject: 'Science', image: scienceBookImg },
+  { name: 'Social Science', subject: 'Social Studies', image: socialBookImg },
 ];
 
 const poets = [
@@ -79,7 +86,13 @@ export const ContentGrid = () => {
               className="bg-card border-2 border-accent/30 rounded-lg p-4 text-center cursor-pointer transition-all duration-300 hover:border-secondary hover:bg-secondary/10 hover:shadow-soft"
               onClick={() => handleItemClick('book', book.name)}
             >
-              <div className="text-2xl mb-2 text-primary">📚</div>
+              <div className="w-12 h-12 mx-auto mb-2 rounded-lg overflow-hidden">
+                <img 
+                  src={book.image} 
+                  alt={`${book.name} book`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <h4 className="font-semibold text-foreground text-sm">{book.name}</h4>
             </div>
           ))}
@@ -89,8 +102,12 @@ export const ContentGrid = () => {
       {/* Poets/Scholars */}
       <Card className="p-6 h-fit animate-slide-up" style={{ animationDelay: '0.4s' }}>
         <div className="flex items-center gap-4 p-2 border-b border-muted pb-4 mb-4">
-          <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center shadow-soft">
-            <span className="text-xl text-primary-foreground">🎭</span>
+          <div className="w-12 h-12 bg-gradient-primary rounded-lg overflow-hidden shadow-soft">
+            <img 
+              src={tamilPoetsImg} 
+              alt="Tamil poets"
+              className="w-full h-full object-cover"
+            />
           </div>
           <div>
             <h3 className="text-xl font-bold text-foreground">அறிஞர்கள்</h3>
