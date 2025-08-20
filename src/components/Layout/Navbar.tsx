@@ -85,8 +85,8 @@ export const Navbar = () => {
             className="text-primary-foreground text-xl font-bold hover:scale-105 transition-transform duration-300 flex items-center gap-2"
           >
             <GraduationCap className="h-6 w-6" />
-            <span className="hidden sm:inline">TNPSC wizard: Your magical guide to TNPSC success</span>
-            <span className="sm:hidden">TNPSC wizard</span>
+            <span className="hidden sm:inline">TNPSC Wizard</span>
+            <span className="sm:hidden">TNPSC Wizard</span>
           </Link>
 
           {/* Search Bar */}
