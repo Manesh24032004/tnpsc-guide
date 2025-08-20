@@ -45,10 +45,10 @@ export const Navbar = () => {
               <Button 
                 variant="secondary" 
                 size="sm" 
-                className="font-semibold shadow-soft hover:shadow-elegant transition-all duration-300"
+                className="font-semibold shadow-soft hover:shadow-elegant transition-all duration-300 px-2"
               >
-                <Menu className="h-4 w-4 mr-2" />
-                Menu
+                <Menu className="h-4 w-4 mr-1" />
+                <span className="hidden sm:inline">Menu</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-80">
@@ -90,14 +90,14 @@ export const Navbar = () => {
           </Link>
 
           {/* Search Bar */}
-          <form onSubmit={handleSearch} className="relative max-w-xs w-48">
+          <form onSubmit={handleSearch} className="relative w-32">
             <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
             <Input
               type="text"
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 pr-3 py-1 text-sm h-8 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
+              className="pl-7 pr-2 py-1 text-sm h-8 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
             />
           </form>
         </div>
