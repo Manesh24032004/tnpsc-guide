@@ -90,14 +90,14 @@ export const Navbar = () => {
           </Link>
 
           {/* Search Bar */}
-          <form onSubmit={handleSearch} className="relative max-w-xs">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <form onSubmit={handleSearch} className="relative max-w-xs w-48">
+            <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Search here..."
+              placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
+              className="pl-8 pr-3 py-1 text-sm h-8 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
             />
           </form>
         </div>
