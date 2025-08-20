@@ -53,7 +53,7 @@ export const Navbar = () => {
             <SheetContent side="left" className="w-80">
               <SheetHeader>
                 <SheetTitle className="text-primary text-xl font-bold">
-                  Navigation Menu
+                  TNPSC Wizard
                 </SheetTitle>
                 <SheetDescription>
                   Quick access to all learning resources
