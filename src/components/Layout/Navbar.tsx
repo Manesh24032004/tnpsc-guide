@@ -47,8 +47,7 @@ export const Navbar = () => {
                 size="sm" 
                 className="font-semibold shadow-soft hover:shadow-elegant transition-all duration-300 px-2"
               >
-                <Menu className="h-4 w-4 mr-1" />
-                <span className="hidden sm:inline">Menu</span>
+                <Menu className="h-4 w-4" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-80">
