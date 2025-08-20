@@ -9,6 +9,13 @@ import scienceBookImg from '@/assets/science-book.jpg';
 import socialBookImg from '@/assets/social-book.jpg';
 import tamilPoetsImg from '@/assets/tamil-poets.jpg';
 
+// Import individual poet images
+import bharathiyarImg from '@/assets/poets/bharathiyar.jpg';
+import bharathidasanImg from '@/assets/poets/bharathidasan.jpg';
+import namakkalKavignarImg from '@/assets/poets/namakkal-kavignar.jpg';
+import kannadasanImg from '@/assets/poets/kannadasan.jpg';
+import uvSwaminathaIyerImg from '@/assets/poets/uv-swaminatha-iyer.jpg';
+
 const previousYearQuestions = [
   { name: '2025 G-IV', year: '2025' },
   { name: '2025 G-1', year: '2025' },
@@ -25,11 +32,23 @@ const books = [
 ];
 
 const poets = [
-  'பாரதியார்', 'பாரதிதாசன்', 'நாமக்கல் கவிஞர்', 'தேவநேய பவானர்',
-  'உ. வே. சாமிநாதர்', 'பாவலரேறு பெருஞ்சித்திரனார்', 'கண்ணதாசன்',
-  'டி.கே. சிதம்பரனார்', 'தெ. பொ. மீனாட்சிசுந்தரம்', 'சி. இலக்குவனார்',
-  'ஜி. யு. போப்', 'வீரமாமுனிவர்', 'குன்றக்குடி அடிகள்', 'காயிதே மில்லத்',
-  'தாரா பாரதி', 'வேலு நாச்சியார்', 'பட்டுக்கோட்டை கல்யாணசுந்தரம்',
+  { name: 'பாரதியார்', image: bharathiyarImg },
+  { name: 'பாரதிதாசன்', image: bharathidasanImg },
+  { name: 'நாமக்கல் கவிஞர்', image: namakkalKavignarImg },
+  { name: 'உ. வே. சாமிநாதர்', image: uvSwaminathaIyerImg },
+  { name: 'கண்ணதாசன்', image: kannadasanImg },
+  { name: 'தேவநேய பவானர்', image: null },
+  { name: 'பாவலரேறு பெருஞ்சித்திரனார்', image: null },
+  { name: 'டி.கே. சிதம்பரனார்', image: null },
+  { name: 'தெ. பொ. மீனாட்சிசுந்தரம்', image: null },
+  { name: 'சி. இலக்குவனார்', image: null },
+  { name: 'ஜி. யு. போப்', image: null },
+  { name: 'வீரமாமுனிவர்', image: null },
+  { name: 'குன்றக்குடி அடிகள்', image: null },
+  { name: 'காயிதே மில்லத்', image: null },
+  { name: 'தாரா பாரதி', image: null },
+  { name: 'வேலு நாச்சியார்', image: null },
+  { name: 'பட்டுக்கோட்டை கல்யாணசுந்தரம்', image: null },
 ];
 
 export const ContentGrid = () => {
@@ -120,10 +139,23 @@ export const ContentGrid = () => {
             {poets.map((poet, index) => (
               <div
                 key={index}
-                className="bg-muted rounded-lg p-4 border-l-4 border-secondary cursor-pointer transition-all duration-300 hover:bg-secondary/20 hover:border-primary hover:shadow-soft"
-                onClick={() => handleItemClick('poet', poet)}
+                className="bg-muted rounded-lg p-3 border-l-4 border-secondary cursor-pointer transition-all duration-300 hover:bg-secondary/20 hover:border-primary hover:shadow-soft flex items-center gap-3"
+                onClick={() => handleItemClick('poet', poet.name)}
               >
-                <div className="font-semibold text-foreground text-sm">{poet}</div>
+                <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                  {poet.image ? (
+                    <img 
+                      src={poet.image} 
+                      alt={poet.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-accent/20 flex items-center justify-center">
+                      <span className="text-accent text-xs">👤</span>
+                    </div>
+                  )}
+                </div>
+                <div className="font-semibold text-foreground text-sm">{poet.name}</div>
               </div>
             ))}
           </div>
