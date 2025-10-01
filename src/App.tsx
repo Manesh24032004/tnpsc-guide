@@ -8,6 +8,8 @@ import Syllabus from "./pages/Syllabus";
 import PreviousPapers from "./pages/PreviousPapers";
 import Books from "./pages/Books";
 import StandardBooks from "./pages/StandardBooks";
+import Tirukural from "./pages/Tirukural";
+import Notes from "./pages/Notes";
 import Poets from "./pages/Poets";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
@@ -27,6 +29,8 @@ function App() {
             <Route path="/previous-papers" element={<PreviousPapers />} />
             <Route path="/books" element={<Books />} />
             <Route path="/books/:grade" element={<StandardBooks />} />
+            <Route path="/tirukural" element={<Tirukural />} />
+            <Route path="/notes" element={<Notes />} />
             <Route path="/poets" element={<Poets />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />

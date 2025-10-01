@@ -14,9 +14,10 @@ import { Link, useLocation } from 'react-router-dom';
 
 const navigationItems = [
   { href: '/', label: 'Home', icon: '🏠' },
-  { href: '/books', label: 'Books', icon: '📚' },
   { href: '/syllabus', label: 'Syllabus', icon: '📝' },
-  { href: '/poets', label: 'Tamil Scholars', icon: '📜' },
+  { href: '/tirukural', label: 'திருக்குறள்', icon: '📜' },
+  { href: '/notes', label: 'Study Notes', icon: '📔' },
+  { href: '/poets', label: 'Tamil Scholars', icon: '👤' },
   { href: '/previous-papers', label: 'Previous Papers', icon: '📋' },
   { href: '/admin', label: 'Admin Login', icon: '⚙️' },
 ];

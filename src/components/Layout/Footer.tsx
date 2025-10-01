@@ -49,9 +49,9 @@ export const Footer = () => {
               variant="secondary" 
               className="font-semibold shadow-soft hover:shadow-elegant transition-all duration-300"
             >
-              <Link to="/books" className="flex items-center gap-2">
+              <Link to="/notes" className="flex items-center gap-2">
                 <BookOpen className="h-4 w-4" />
-                Books
+                Notes
               </Link>
             </Button>
           </div>
