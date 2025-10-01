@@ -1,6 +1,7 @@
 import { FileText, Book } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Link } from 'react-router-dom';
 
 // Import images
 import tamilBookImg from '@/assets/tamil-book.jpg';
@@ -74,13 +75,16 @@ export const ContentGrid = () => {
         <ScrollArea className="h-80">
           <div className="space-y-3">
             {previousYearQuestions.map((item, index) => (
-              <div
+              <Link 
                 key={index}
-                className="bg-muted rounded-lg p-4 border-l-4 border-secondary cursor-pointer transition-all duration-300 hover:bg-secondary/20 hover:border-primary hover:shadow-soft"
-                onClick={() => handleItemClick('question', item.name)}
+                to="/previous-papers"
               >
-                <div className="font-semibold text-foreground">{item.name}</div>
-              </div>
+                <div
+                  className="bg-muted rounded-lg p-4 border-l-4 border-secondary cursor-pointer transition-all duration-300 hover:bg-secondary/20 hover:border-primary hover:shadow-soft"
+                >
+                  <div className="font-semibold text-foreground">{item.name}</div>
+                </div>
+              </Link>
             ))}
           </div>
         </ScrollArea>
@@ -94,26 +98,29 @@ export const ContentGrid = () => {
           </div>
           <div>
             <h3 className="text-xl font-bold text-foreground">Books</h3>
-            <p className="text-sm text-muted-foreground">Easy to read books</p>
+            <p className="text-sm text-muted-foreground">படிப்பதற்கான புத்தகங்கள்</p>
           </div>
         </div>
         
         <div className="grid grid-cols-2 gap-3">
           {books.map((book, index) => (
-            <div
+            <Link
               key={index}
-              className="bg-card border-2 border-accent/30 rounded-lg p-4 text-center cursor-pointer transition-all duration-300 hover:border-secondary hover:bg-secondary/10 hover:shadow-soft"
-              onClick={() => handleItemClick('book', book.name)}
+              to="/books"
             >
-              <div className="w-12 h-12 mx-auto mb-2 rounded-lg overflow-hidden">
-                <img 
-                  src={book.image} 
-                  alt={`${book.name} book`}
-                  className="w-full h-full object-cover"
-                />
+              <div
+                className="bg-card border-2 border-accent/30 rounded-lg p-4 text-center cursor-pointer transition-all duration-300 hover:border-secondary hover:bg-secondary/10 hover:shadow-soft"
+              >
+                <div className="w-12 h-12 mx-auto mb-2 rounded-lg overflow-hidden">
+                  <img 
+                    src={book.image} 
+                    alt={`${book.name} book`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h4 className="font-semibold text-foreground text-sm">{book.name}</h4>
               </div>
-              <h4 className="font-semibold text-foreground text-sm">{book.name}</h4>
-            </div>
+            </Link>
           ))}
         </div>
       </Card>
@@ -137,26 +144,29 @@ export const ContentGrid = () => {
         <ScrollArea className="h-80">
           <div className="space-y-3">
             {poets.map((poet, index) => (
-              <div
+              <Link
                 key={index}
-                className="bg-muted rounded-lg p-3 border-l-4 border-secondary cursor-pointer transition-all duration-300 hover:bg-secondary/20 hover:border-primary hover:shadow-soft flex items-center gap-3"
-                onClick={() => handleItemClick('poet', poet.name)}
+                to="/poets"
               >
-                <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-                  {poet.image ? (
-                    <img 
-                      src={poet.image} 
-                      alt={poet.name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-accent/20 flex items-center justify-center">
-                      <span className="text-accent text-xs">👤</span>
-                    </div>
-                  )}
+                <div
+                  className="bg-muted rounded-lg p-3 border-l-4 border-secondary cursor-pointer transition-all duration-300 hover:bg-secondary/20 hover:border-primary hover:shadow-soft flex items-center gap-3"
+                >
+                  <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                    {poet.image ? (
+                      <img 
+                        src={poet.image} 
+                        alt={poet.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-accent/20 flex items-center justify-center">
+                        <span className="text-accent text-xs">👤</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="font-semibold text-foreground text-sm">{poet.name}</div>
                 </div>
-                <div className="font-semibold text-foreground text-sm">{poet.name}</div>
-              </div>
+              </Link>
             ))}
           </div>
         </ScrollArea>

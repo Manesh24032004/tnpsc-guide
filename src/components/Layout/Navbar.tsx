@@ -14,12 +14,10 @@ import { Link, useLocation } from 'react-router-dom';
 
 const navigationItems = [
   { href: '/', label: 'Home', icon: '🏠' },
-  { href: '/uploads', label: 'Upload PDFs', icon: '📤' },
-  { href: '/model-papers', label: 'Model Question Papers', icon: '📋' },
-  { href: '/tirukural', label: 'திருக்குறள்', icon: '📜' },
-  { href: '/tamil-syllabus', label: 'Tamil Syllabus Topics', icon: '📝' },
-  { href: '/general-studies', label: 'General Studies Syllabus', icon: '🌟' },
-  { href: '/maths-syllabus', label: 'Maths Syllabus', icon: '🔢' },
+  { href: '/books', label: 'Books', icon: '📚' },
+  { href: '/syllabus', label: 'Syllabus', icon: '📝' },
+  { href: '/poets', label: 'Tamil Scholars', icon: '📜' },
+  { href: '/previous-papers', label: 'Previous Papers', icon: '📋' },
   { href: '/admin', label: 'Admin Login', icon: '⚙️' },
 ];
 
@@ -52,9 +50,16 @@ export const Navbar = () => {
             </SheetTrigger>
             <SheetContent side="left" className="w-80">
               <SheetHeader>
-                <SheetTitle className="text-primary text-xl font-bold">
-                  TNPSC Wizard
-                </SheetTitle>
+                <div className="flex items-center gap-3">
+                  <img 
+                    src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=100&h=100&fit=crop" 
+                    alt="TNPSC Logo" 
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <SheetTitle className="text-primary text-xl font-bold">
+                    TNPSC Wizard
+                  </SheetTitle>
+                </div>
                 <SheetDescription>
                   Quick access to all learning resources
                 </SheetDescription>
@@ -81,22 +86,22 @@ export const Navbar = () => {
           {/* Brand */}
           <Link 
             to="/" 
-            className="text-primary-foreground text-xl font-bold hover:scale-105 transition-transform duration-300 flex items-center gap-2"
+            className="text-primary-foreground text-3xl font-bold hover:scale-105 transition-transform duration-300 flex items-center gap-2"
           >
-            <GraduationCap className="h-6 w-6" />
+            <GraduationCap className="h-8 w-8" />
             <span className="hidden sm:inline">TNPSC Wizard</span>
             <span className="sm:hidden">TNPSC Wizard</span>
           </Link>
 
           {/* Search Bar */}
-          <form onSubmit={handleSearch} className="relative w-32">
-            <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+          <form onSubmit={handleSearch} className="relative w-48">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
               type="text"
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-7 pr-2 py-1 text-sm h-8 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
+              className="pl-10 pr-4 py-2 text-base h-12 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
             />
           </form>
         </div>

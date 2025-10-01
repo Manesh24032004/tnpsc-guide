@@ -12,8 +12,11 @@ export const Footer = () => {
             <h3 className="text-2xl font-bold text-secondary mb-2">
               Web Assistant for TNPSC Aspirants
             </h3>
-            <p className="text-primary-foreground/90">
+            <p className="text-primary-foreground/90 mb-2">
               Simple learning for everyone!
+            </p>
+            <p className="text-sm italic text-primary-foreground/80">
+              "கல்வி கற்றால் கவலை தீரும்"
             </p>
           </div>
 
@@ -35,9 +38,9 @@ export const Footer = () => {
               variant="secondary" 
               className="font-semibold shadow-soft hover:shadow-elegant transition-all duration-300"
             >
-              <Link to="/quiz" className="flex items-center gap-2">
-                <Gamepad2 className="h-4 w-4" />
-                Quiz
+              <Link to="/syllabus" className="flex items-center gap-2">
+                <BookOpen className="h-4 w-4" />
+                Syllabus
               </Link>
             </Button>
             
