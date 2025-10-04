@@ -1,54 +1,54 @@
 import { useParams, Link } from 'react-router-dom';
-import { BookOpen, ArrowLeft } from 'lucide-react';
+import { BookOpen, ArrowLeft, Download } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Navbar } from '@/components/Layout/Navbar';
 import { Footer } from '@/components/Layout/Footer';
 
-const subjectsByStandard: Record<string, { name: string; icon: string; books: string[] }[]> = {
+const subjectsByStandard: Record<string, { name: string; icon: string }[]> = {
   '6': [
-    { name: 'Tamil Books', icon: '📚', books: ['Tamil Textbook', 'Tamil Grammar', 'Tamil Literature'] },
-    { name: 'Science Books', icon: '🔬', books: ['Science Part 1', 'Science Part 2'] },
-    { name: 'Social Books', icon: '🌍', books: ['History', 'Geography', 'Civics'] },
-    { name: 'Maths', icon: '🔢', books: ['Mathematics Term 1', 'Mathematics Term 2'] },
+    { name: 'Tamil', icon: '📚' },
+    { name: 'Science', icon: '🔬' },
+    { name: 'Social', icon: '🌍' },
+    { name: 'Maths', icon: '🔢' },
   ],
   '7': [
-    { name: 'Tamil Books', icon: '📚', books: ['Tamil Textbook', 'Tamil Grammar', 'Tamil Literature'] },
-    { name: 'Science Books', icon: '🔬', books: ['Science Part 1', 'Science Part 2'] },
-    { name: 'Social Books', icon: '🌍', books: ['History', 'Geography', 'Civics'] },
-    { name: 'Maths', icon: '🔢', books: ['Mathematics Term 1', 'Mathematics Term 2'] },
+    { name: 'Tamil', icon: '📚' },
+    { name: 'Science', icon: '🔬' },
+    { name: 'Social', icon: '🌍' },
+    { name: 'Maths', icon: '🔢' },
   ],
   '8': [
-    { name: 'Tamil Books', icon: '📚', books: ['Tamil Textbook', 'Tamil Grammar', 'Tamil Literature'] },
-    { name: 'Science Books', icon: '🔬', books: ['Science Part 1', 'Science Part 2'] },
-    { name: 'Social Books', icon: '🌍', books: ['History', 'Geography', 'Civics'] },
-    { name: 'Maths', icon: '🔢', books: ['Mathematics Term 1', 'Mathematics Term 2'] },
+    { name: 'Tamil', icon: '📚' },
+    { name: 'Science', icon: '🔬' },
+    { name: 'Social', icon: '🌍' },
+    { name: 'Maths', icon: '🔢' },
   ],
   '9': [
-    { name: 'Tamil Books', icon: '📚', books: ['Tamil Textbook', 'Tamil Grammar', 'Tamil Literature'] },
-    { name: 'Science Books', icon: '🔬', books: ['Physics', 'Chemistry', 'Biology'] },
-    { name: 'Social Books', icon: '🌍', books: ['History', 'Geography', 'Economics', 'Civics'] },
-    { name: 'Maths', icon: '🔢', books: ['Mathematics Term 1', 'Mathematics Term 2'] },
+    { name: 'Tamil', icon: '📚' },
+    { name: 'Science', icon: '🔬' },
+    { name: 'Social', icon: '🌍' },
+    { name: 'Maths', icon: '🔢' },
   ],
   '10': [
-    { name: 'Tamil Books', icon: '📚', books: ['Tamil Textbook', 'Tamil Grammar', 'Tamil Literature'] },
-    { name: 'Science Books', icon: '🔬', books: ['Physics', 'Chemistry', 'Biology'] },
-    { name: 'Social Books', icon: '🌍', books: ['History', 'Geography', 'Economics', 'Civics'] },
-    { name: 'Maths', icon: '🔢', books: ['Mathematics Term 1', 'Mathematics Term 2'] },
+    { name: 'Tamil', icon: '📚' },
+    { name: 'Science', icon: '🔬' },
+    { name: 'Social', icon: '🌍' },
+    { name: 'Maths', icon: '🔢' },
   ],
   '11': [
-    { name: 'Tamil Books', icon: '📚', books: ['Tamil Literature', 'Tamil Language'] },
-    { name: 'Sirapu Tamil', icon: '✨', books: ['Special Tamil'] },
-    { name: 'History Books', icon: '📜', books: ['Ancient History', 'Medieval History', 'Modern History'] },
-    { name: 'Economics Books', icon: '💰', books: ['Micro Economics', 'Macro Economics'] },
-    { name: 'Political Science', icon: '⚖️', books: ['Indian Government', 'Political Theory'] },
+    { name: 'Tamil', icon: '📚' },
+    { name: 'Sirapu Tamil', icon: '✨' },
+    { name: 'History', icon: '📜' },
+    { name: 'Economics', icon: '💰' },
+    { name: 'Political Science', icon: '⚖️' },
   ],
   '12': [
-    { name: 'Tamil Books', icon: '📚', books: ['Tamil Literature', 'Tamil Language'] },
-    { name: 'Sirapu Tamil', icon: '✨', books: ['Special Tamil'] },
-    { name: 'History Books', icon: '📜', books: ['Ancient History', 'Medieval History', 'Modern History'] },
-    { name: 'Economics Books', icon: '💰', books: ['Micro Economics', 'Macro Economics'] },
-    { name: 'Political Science', icon: '⚖️', books: ['Indian Government', 'Political Theory'] },
+    { name: 'Tamil', icon: '📚' },
+    { name: 'Sirapu Tamil', icon: '✨' },
+    { name: 'History', icon: '📜' },
+    { name: 'Economics', icon: '💰' },
+    { name: 'Political Science', icon: '⚖️' },
   ],
 };
 
@@ -94,23 +94,29 @@ const StandardBooks = () => {
               className="p-6 transition-all duration-300 hover:shadow-elegant hover:scale-105 border-2 border-accent/30 hover:border-primary animate-slide-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="text-center mb-4">
+              <div className="text-center mb-6">
                 <div className="text-5xl mb-3">{subject.icon}</div>
                 <h3 className="text-xl font-bold text-foreground mb-4">
                   {subject.name}
                 </h3>
               </div>
 
-              <div className="space-y-2">
-                {subject.books.map((book) => (
-                  <div 
-                    key={book}
-                    className="flex items-center gap-2 p-3 bg-muted rounded-lg hover:bg-muted/80 transition-colors cursor-pointer"
-                  >
-                    <BookOpen className="h-4 w-4 text-primary" />
-                    <span className="text-sm">{book}</span>
-                  </div>
-                ))}
+              <div className="mb-4">
+                <div className="flex items-center gap-2 p-3 bg-primary/10 rounded-lg">
+                  <BookOpen className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-medium text-foreground">{subject.name} Book.pdf</span>
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" className="flex-1">
+                  <BookOpen className="h-4 w-4 mr-2" />
+                  View
+                </Button>
+                <Button variant="default" size="sm" className="flex-1">
+                  <Download className="h-4 w-4 mr-2" />
+                  Download
+                </Button>
               </div>
             </Card>
           ))}

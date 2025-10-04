@@ -2,7 +2,6 @@ import { Navbar } from '@/components/Layout/Navbar';
 import { Footer } from '@/components/Layout/Footer';
 import { WelcomeCard } from '@/components/Dashboard/WelcomeCard';
 import { SyllabusSection } from '@/components/Dashboard/SyllabusSection';
-import { BooksSection } from '@/components/Dashboard/BooksSection';
 import { ContentGrid } from '@/components/Dashboard/ContentGrid';
 
 const Dashboard = () => {
@@ -13,7 +12,6 @@ const Dashboard = () => {
       <main className="container mx-auto px-4 py-8 space-y-8">
         <WelcomeCard />
         <SyllabusSection />
-        <BooksSection />
         <ContentGrid />
       </main>
       
