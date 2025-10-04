@@ -1,4 +1,4 @@
-import { FileText, Book, PlayCircle, BookOpen } from 'lucide-react';
+import { FileText, Book } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Link } from 'react-router-dom';
@@ -27,59 +27,9 @@ const books = [
 
 export const ContentGrid = () => {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
-      {/* TNPSC Wizard Start Now */}
-      <Card className="p-6 h-fit animate-slide-up bg-gradient-to-br from-primary/10 to-secondary/10 border-2 border-primary/30">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center shadow-soft mx-auto mb-4">
-            <PlayCircle className="h-8 w-8 text-primary-foreground" />
-          </div>
-          <h3 className="text-2xl font-bold text-foreground mb-2">TNPSC Wizard</h3>
-          <p className="text-sm text-muted-foreground mb-4 italic">
-            "கற்க கசடறக் கற்பவை கற்றபின் நிற்க அதற்குத் தக"
-          </p>
-          <Button className="w-full" size="lg">
-            Start Now
-          </Button>
-        </div>
-      </Card>
-
-      {/* Explore Syllabus */}
-      <Card className="p-6 h-fit animate-slide-up" style={{ animationDelay: '0.1s' }}>
-        <div className="flex items-center gap-4 p-2 border-b border-muted pb-4 mb-4">
-          <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center shadow-soft">
-            <BookOpen className="h-6 w-6 text-primary-foreground" />
-          </div>
-          <div>
-            <h3 className="text-xl font-bold text-foreground">Explore Syllabus</h3>
-            <p className="text-sm text-muted-foreground">பாடத்திட்டம்</p>
-          </div>
-        </div>
-        
-        <div className="space-y-3">
-          <Link to="/syllabus">
-            <div className="bg-muted rounded-lg p-4 border-l-4 border-primary cursor-pointer transition-all duration-300 hover:bg-primary/20 hover:border-primary hover:shadow-soft">
-              <div className="font-semibold text-foreground">G-1 Syllabus</div>
-              <p className="text-xs text-muted-foreground mt-1">Group 1 Examination</p>
-            </div>
-          </Link>
-          <Link to="/syllabus">
-            <div className="bg-muted rounded-lg p-4 border-l-4 border-secondary cursor-pointer transition-all duration-300 hover:bg-secondary/20 hover:border-primary hover:shadow-soft">
-              <div className="font-semibold text-foreground">G-2/IIA Syllabus</div>
-              <p className="text-xs text-muted-foreground mt-1">Group 2 & IIA Examination</p>
-            </div>
-          </Link>
-          <Link to="/syllabus">
-            <div className="bg-muted rounded-lg p-4 border-l-4 border-accent cursor-pointer transition-all duration-300 hover:bg-accent/20 hover:border-primary hover:shadow-soft">
-              <div className="font-semibold text-foreground">G-IV Syllabus</div>
-              <p className="text-xs text-muted-foreground mt-1">Group 4 Examination</p>
-            </div>
-          </Link>
-        </div>
-      </Card>
-
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Past Year Question Papers */}
-      <Card className="p-6 h-fit animate-slide-up" style={{ animationDelay: '0.2s' }}>
+      <Card className="p-6 h-fit animate-slide-up">
         <div className="flex items-center gap-4 p-2 border-b border-muted pb-4 mb-4">
           <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center shadow-soft">
             <FileText className="h-6 w-6 text-primary-foreground" />
@@ -109,7 +59,7 @@ export const ContentGrid = () => {
       </Card>
 
       {/* Books */}
-      <Card className="p-6 h-fit animate-slide-up" style={{ animationDelay: '0.3s' }}>
+      <Card className="p-6 h-fit animate-slide-up" style={{ animationDelay: '0.1s' }}>
         <div className="flex items-center gap-4 p-2 border-b border-muted pb-4 mb-4">
           <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center shadow-soft">
             <Book className="h-6 w-6 text-accent-foreground" />
