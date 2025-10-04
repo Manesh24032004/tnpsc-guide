@@ -1,21 +1,14 @@
-import { FileText, Book } from 'lucide-react';
+import { FileText, Book, PlayCircle, BookOpen } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 // Import images
 import tamilBookImg from '@/assets/tamil-book.jpg';
 import mathsBookImg from '@/assets/maths-book.jpg';
 import scienceBookImg from '@/assets/science-book.jpg';
 import socialBookImg from '@/assets/social-book.jpg';
-import tamilPoetsImg from '@/assets/tamil-poets.jpg';
-
-// Import individual poet images
-import bharathiyarImg from '@/assets/poets/bharathiyar.jpg';
-import bharathidasanImg from '@/assets/poets/bharathidasan.jpg';
-import namakkalKavignarImg from '@/assets/poets/namakkal-kavignar.jpg';
-import kannadasanImg from '@/assets/poets/kannadasan.jpg';
-import uvSwaminathaIyerImg from '@/assets/poets/uv-swaminatha-iyer.jpg';
 
 const previousYearQuestions = [
   { name: '2025 G-IV', year: '2025' },
@@ -32,35 +25,60 @@ const books = [
   { name: 'Social Science', subject: 'Social Studies', image: socialBookImg },
 ];
 
-const poets = [
-  { name: 'பாரதியார்', image: bharathiyarImg },
-  { name: 'பாரதிதாசன்', image: bharathidasanImg },
-  { name: 'நாமக்கல் கவிஞர்', image: namakkalKavignarImg },
-  { name: 'உ. வே. சாமிநாதர்', image: uvSwaminathaIyerImg },
-  { name: 'கண்ணதாசன்', image: kannadasanImg },
-  { name: 'தேவநேய பவானர்', image: null },
-  { name: 'பாவலரேறு பெருஞ்சித்திரனார்', image: null },
-  { name: 'டி.கே. சிதம்பரனார்', image: null },
-  { name: 'தெ. பொ. மீனாட்சிசுந்தரம்', image: null },
-  { name: 'சி. இலக்குவனார்', image: null },
-  { name: 'ஜி. யு. போப்', image: null },
-  { name: 'வீரமாமுனிவர்', image: null },
-  { name: 'குன்றக்குடி அடிகள்', image: null },
-  { name: 'காயிதே மில்லத்', image: null },
-  { name: 'தாரா பாரதி', image: null },
-  { name: 'வேலு நாச்சியார்', image: null },
-  { name: 'பட்டுக்கோட்டை கல்யாணசுந்தரம்', image: null },
-];
-
 export const ContentGrid = () => {
-  const handleItemClick = (type: string, item: string) => {
-    console.log(`Opening ${type}: ${item}`);
-    // TODO: Implement PDF viewing/download functionality
-  };
-
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      {/* Previous Year Questions */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+      {/* TNPSC Wizard Start Now */}
+      <Card className="p-6 h-fit animate-slide-up bg-gradient-to-br from-primary/10 to-secondary/10 border-2 border-primary/30">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center shadow-soft mx-auto mb-4">
+            <PlayCircle className="h-8 w-8 text-primary-foreground" />
+          </div>
+          <h3 className="text-2xl font-bold text-foreground mb-2">TNPSC Wizard</h3>
+          <p className="text-sm text-muted-foreground mb-4 italic">
+            "கற்க கசடறக் கற்பவை கற்றபின் நிற்க அதற்குத் தக"
+          </p>
+          <Button className="w-full" size="lg">
+            Start Now
+          </Button>
+        </div>
+      </Card>
+
+      {/* Explore Syllabus */}
+      <Card className="p-6 h-fit animate-slide-up" style={{ animationDelay: '0.1s' }}>
+        <div className="flex items-center gap-4 p-2 border-b border-muted pb-4 mb-4">
+          <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center shadow-soft">
+            <BookOpen className="h-6 w-6 text-primary-foreground" />
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-foreground">Explore Syllabus</h3>
+            <p className="text-sm text-muted-foreground">பாடத்திட்டம்</p>
+          </div>
+        </div>
+        
+        <div className="space-y-3">
+          <Link to="/syllabus">
+            <div className="bg-muted rounded-lg p-4 border-l-4 border-primary cursor-pointer transition-all duration-300 hover:bg-primary/20 hover:border-primary hover:shadow-soft">
+              <div className="font-semibold text-foreground">G-1 Syllabus</div>
+              <p className="text-xs text-muted-foreground mt-1">Group 1 Examination</p>
+            </div>
+          </Link>
+          <Link to="/syllabus">
+            <div className="bg-muted rounded-lg p-4 border-l-4 border-secondary cursor-pointer transition-all duration-300 hover:bg-secondary/20 hover:border-primary hover:shadow-soft">
+              <div className="font-semibold text-foreground">G-2/IIA Syllabus</div>
+              <p className="text-xs text-muted-foreground mt-1">Group 2 & IIA Examination</p>
+            </div>
+          </Link>
+          <Link to="/syllabus">
+            <div className="bg-muted rounded-lg p-4 border-l-4 border-accent cursor-pointer transition-all duration-300 hover:bg-accent/20 hover:border-primary hover:shadow-soft">
+              <div className="font-semibold text-foreground">G-IV Syllabus</div>
+              <p className="text-xs text-muted-foreground mt-1">Group 4 Examination</p>
+            </div>
+          </Link>
+        </div>
+      </Card>
+
+      {/* Past Year Question Papers */}
       <Card className="p-6 h-fit animate-slide-up" style={{ animationDelay: '0.2s' }}>
         <div className="flex items-center gap-4 p-2 border-b border-muted pb-4 mb-4">
           <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center shadow-soft">
@@ -72,7 +90,7 @@ export const ContentGrid = () => {
           </div>
         </div>
         
-        <ScrollArea className="h-80">
+        <ScrollArea className="h-[280px]">
           <div className="space-y-3">
             {previousYearQuestions.map((item, index) => (
               <Link 
@@ -123,53 +141,6 @@ export const ContentGrid = () => {
             </Link>
           ))}
         </div>
-      </Card>
-
-      {/* Poets/Scholars */}
-      <Card className="p-6 h-fit animate-slide-up" style={{ animationDelay: '0.4s' }}>
-        <div className="flex items-center gap-4 p-2 border-b border-muted pb-4 mb-4">
-          <div className="w-12 h-12 bg-gradient-primary rounded-lg overflow-hidden shadow-soft">
-            <img 
-              src={tamilPoetsImg} 
-              alt="Tamil poets"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div>
-            <h3 className="text-xl font-bold text-foreground">அறிஞர்கள்</h3>
-            <p className="text-sm text-muted-foreground">Tamil scholars</p>
-          </div>
-        </div>
-        
-        <ScrollArea className="h-80">
-          <div className="space-y-3">
-            {poets.map((poet, index) => (
-              <Link
-                key={index}
-                to="/poets"
-              >
-                <div
-                  className="bg-muted rounded-lg p-3 border-l-4 border-secondary cursor-pointer transition-all duration-300 hover:bg-secondary/20 hover:border-primary hover:shadow-soft flex items-center gap-3"
-                >
-                  <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-                    {poet.image ? (
-                      <img 
-                        src={poet.image} 
-                        alt={poet.name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-accent/20 flex items-center justify-center">
-                        <span className="text-accent text-xs">👤</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="font-semibold text-foreground text-sm">{poet.name}</div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </ScrollArea>
       </Card>
     </div>
   );
