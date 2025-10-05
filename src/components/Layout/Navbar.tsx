@@ -18,7 +18,6 @@ const navigationItems = [
   { href: '/tirukural', label: 'திருக்குறள்', icon: '📜' },
   { href: '/notes', label: 'Study Notes', icon: '📔' },
   { href: '/poets', label: 'தமிழ் அறிஞர்கள்', icon: '👤' },
-  { href: '/quiz', label: 'Quiz', icon: '🧠' },
   { href: '/about-tnpsc', label: 'About TNPSC', icon: 'ℹ️' },
   { href: '/admin', label: 'Admin Login', icon: '⚙️' },
 ];
@@ -44,10 +43,10 @@ export const Navbar = () => {
             <SheetTrigger asChild>
               <Button 
                 variant="secondary" 
-                size="sm" 
-                className="font-semibold shadow-soft hover:shadow-elegant transition-all duration-300 px-2"
+                size="default" 
+                className="font-semibold shadow-soft hover:shadow-elegant transition-all duration-300 h-10 w-10 px-0"
               >
-                <Menu className="h-4 w-4" />
+                <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-80">
@@ -98,13 +97,13 @@ export const Navbar = () => {
           {/* Search Bar and Theme Toggle */}
           <div className="flex items-center gap-2">
             <form onSubmit={handleSearch} className="relative w-48">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="text"
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 py-2 text-base h-12 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
+                className="pl-10 pr-4 text-sm h-10 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
               />
             </form>
             <ThemeToggle />
