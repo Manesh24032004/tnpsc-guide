@@ -8,33 +8,33 @@ import { Footer } from '@/components/Layout/Footer';
 const subjectsByStandard: Record<string, { name: string; icon: string }[]> = {
   '6': [
     { name: 'Tamil', icon: '📚' },
+    { name: 'Maths', icon: '🔢' },
     { name: 'Science', icon: '🔬' },
     { name: 'Social', icon: '🌍' },
-    { name: 'Maths', icon: '🔢' },
   ],
   '7': [
     { name: 'Tamil', icon: '📚' },
+    { name: 'Maths', icon: '🔢' },
     { name: 'Science', icon: '🔬' },
     { name: 'Social', icon: '🌍' },
-    { name: 'Maths', icon: '🔢' },
   ],
   '8': [
     { name: 'Tamil', icon: '📚' },
+    { name: 'Maths', icon: '🔢' },
     { name: 'Science', icon: '🔬' },
     { name: 'Social', icon: '🌍' },
-    { name: 'Maths', icon: '🔢' },
   ],
   '9': [
     { name: 'Tamil', icon: '📚' },
+    { name: 'Maths', icon: '🔢' },
     { name: 'Science', icon: '🔬' },
     { name: 'Social', icon: '🌍' },
-    { name: 'Maths', icon: '🔢' },
   ],
   '10': [
     { name: 'Tamil', icon: '📚' },
+    { name: 'Maths', icon: '🔢' },
     { name: 'Science', icon: '🔬' },
     { name: 'Social', icon: '🌍' },
-    { name: 'Maths', icon: '🔢' },
   ],
   '11': [
     { name: 'Tamil', icon: '📚' },
@@ -42,6 +42,7 @@ const subjectsByStandard: Record<string, { name: string; icon: string }[]> = {
     { name: 'History', icon: '📜' },
     { name: 'Economics', icon: '💰' },
     { name: 'Political Science', icon: '⚖️' },
+    { name: 'அரசியலும் இந்திய பண்பாடும்', icon: '🏛️' },
   ],
   '12': [
     { name: 'Tamil', icon: '📚' },
@@ -49,6 +50,7 @@ const subjectsByStandard: Record<string, { name: string; icon: string }[]> = {
     { name: 'History', icon: '📜' },
     { name: 'Economics', icon: '💰' },
     { name: 'Political Science', icon: '⚖️' },
+    { name: 'அரசியலும் இந்திய பண்பாடும்', icon: '🏛️' },
   ],
 };
 
@@ -102,9 +104,9 @@ const StandardBooks = () => {
               </div>
 
               <div className="mb-4">
-                <div className="flex items-center gap-2 p-3 bg-primary/10 rounded-lg">
+                <div className="flex items-center gap-2 p-3 bg-primary/10 dark:bg-primary/20 rounded-lg">
                   <BookOpen className="h-5 w-5 text-primary" />
-                  <span className="text-sm font-medium text-foreground">{subject.name} Book.pdf</span>
+                  <span className="text-sm font-medium">{subject.name} Book.pdf</span>
                 </div>
               </div>
 
