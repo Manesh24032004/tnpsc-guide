@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Menu, Search, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import {
   Sheet,
   SheetContent,
@@ -14,11 +15,11 @@ import { Link, useLocation } from 'react-router-dom';
 
 const navigationItems = [
   { href: '/', label: 'Home', icon: '🏠' },
-  { href: '/syllabus', label: 'Syllabus', icon: '📝' },
   { href: '/tirukural', label: 'திருக்குறள்', icon: '📜' },
   { href: '/notes', label: 'Study Notes', icon: '📔' },
-  { href: '/poets', label: 'Tamil Scholars', icon: '👤' },
-  { href: '/previous-papers', label: 'Previous Papers', icon: '📋' },
+  { href: '/poets', label: 'தமிழ் அறிஞர்கள்', icon: '👤' },
+  { href: '/quiz', label: 'Quiz', icon: '🧠' },
+  { href: '/about-tnpsc', label: 'About TNPSC', icon: 'ℹ️' },
   { href: '/admin', label: 'Admin Login', icon: '⚙️' },
 ];
 
@@ -94,17 +95,20 @@ export const Navbar = () => {
             <span className="sm:hidden">TNPSC Wizard</span>
           </Link>
 
-          {/* Search Bar */}
-          <form onSubmit={handleSearch} className="relative w-48">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-4 py-2 text-base h-12 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
-            />
-          </form>
+          {/* Search Bar and Theme Toggle */}
+          <div className="flex items-center gap-2">
+            <form onSubmit={handleSearch} className="relative w-48">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 pr-4 py-2 text-base h-12 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
+              />
+            </form>
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     </nav>

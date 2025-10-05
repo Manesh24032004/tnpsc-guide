@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Home, Gamepad2, BookOpen } from 'lucide-react';
+import { Home, Brain } from 'lucide-react';
 
 export const Footer = () => {
   return (
@@ -10,7 +10,7 @@ export const Footer = () => {
           {/* Brand Section */}
           <div className="text-center md:text-left">
             <h3 className="text-2xl font-bold text-secondary mb-2">
-              Web Assistant for TNPSC Aspirants
+              TNPSC Wizard: Your magical guide to TNPSC Success
             </h3>
             <p className="text-primary-foreground/90 mb-2">
               Simple learning for everyone!
@@ -38,20 +38,9 @@ export const Footer = () => {
               variant="secondary" 
               className="font-semibold shadow-soft hover:shadow-elegant transition-all duration-300"
             >
-              <Link to="/syllabus" className="flex items-center gap-2">
-                <BookOpen className="h-4 w-4" />
-                Syllabus
-              </Link>
-            </Button>
-            
-            <Button 
-              asChild
-              variant="secondary" 
-              className="font-semibold shadow-soft hover:shadow-elegant transition-all duration-300"
-            >
-              <Link to="/notes" className="flex items-center gap-2">
-                <BookOpen className="h-4 w-4" />
-                Notes
+              <Link to="/quiz" className="flex items-center gap-2">
+                <Brain className="h-4 w-4" />
+                Quiz
               </Link>
             </Button>
           </div>
