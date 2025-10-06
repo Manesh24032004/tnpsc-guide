@@ -1,4 +1,4 @@
-import { FileText, Book } from 'lucide-react';
+import { FileText, Book, BookOpen } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Link } from 'react-router-dom';
@@ -70,26 +70,19 @@ export const ContentGrid = () => {
           </div>
         </div>
         
-        <div className="grid grid-cols-2 gap-3">
-          {books.map((book, index) => (
-            <Link
-              key={index}
-              to="/books"
+        <div className="flex flex-col items-center justify-center py-8">
+          <p className="text-lg text-muted-foreground mb-6 text-center italic">
+            "கற்க கசடறக் கற்பவை கற்றபின் நிற்க அதற்குத் தக"
+          </p>
+          <Link to="/books/standards">
+            <Button 
+              size="lg" 
+              className="text-base px-10 py-5 h-auto shadow-elegant hover:shadow-glow transition-all duration-300"
             >
-              <div
-                className="bg-card border-2 border-accent/30 rounded-lg p-4 text-center cursor-pointer transition-all duration-300 hover:border-secondary hover:bg-secondary/10 hover:shadow-soft"
-              >
-                <div className="w-12 h-12 mx-auto mb-2 rounded-lg overflow-hidden">
-                  <img 
-                    src={book.image} 
-                    alt={`${book.name} book`}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <h4 className="font-semibold text-foreground text-sm">{book.name}</h4>
-              </div>
-            </Link>
-          ))}
+              <BookOpen className="h-5 w-5 mr-2" />
+              View All Standards
+            </Button>
+          </Link>
         </div>
       </Card>
     </div>
