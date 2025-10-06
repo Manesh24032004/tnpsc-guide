@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Menu, Search, GraduationCap } from 'lucide-react';
+import { Menu, Search, GraduationCap, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ThemeToggle } from '@/components/ThemeToggle';
 import {
   Sheet,
   SheetContent,
@@ -94,7 +93,7 @@ export const Navbar = () => {
             <span className="sm:hidden">TNPSC Wizard</span>
           </Link>
 
-          {/* Search Bar and Theme Toggle */}
+          {/* Search Bar and Notification */}
           <div className="flex items-center gap-2">
             <form onSubmit={handleSearch} className="relative w-48">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -106,7 +105,10 @@ export const Navbar = () => {
                 className="pl-10 pr-4 text-sm h-10 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
               />
             </form>
-            <ThemeToggle />
+            <Button variant="secondary" size="default" className="h-10 w-10 px-0 relative">
+              <Bell className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full text-[10px] text-white flex items-center justify-center">3</span>
+            </Button>
           </div>
         </div>
       </div>

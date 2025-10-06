@@ -3,10 +3,15 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@/hooks/use-theme";
 import Dashboard from "./pages/Dashboard";
 import Syllabus from "./pages/Syllabus";
+import SyllabusG1 from "./pages/SyllabusG1";
+import SyllabusG2 from "./pages/SyllabusG2";
+import SyllabusG4 from "./pages/SyllabusG4";
 import PreviousPapers from "./pages/PreviousPapers";
 import Books from "./pages/Books";
+import BooksStandards from "./pages/BooksStandards";
 import StandardBooks from "./pages/StandardBooks";
 import Tirukural from "./pages/Tirukural";
 import Notes from "./pages/Notes";
@@ -21,26 +26,32 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/syllabus" element={<Syllabus />} />
-            <Route path="/previous-papers" element={<PreviousPapers />} />
-            <Route path="/books" element={<Books />} />
-            <Route path="/books/:grade" element={<StandardBooks />} />
-            <Route path="/tirukural" element={<Tirukural />} />
-            <Route path="/notes" element={<Notes />} />
-            <Route path="/poets" element={<Poets />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/about-tnpsc" element={<AboutTNPSC />} />
-            <Route path="/quiz" element={<Quiz />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <ThemeProvider defaultTheme="light" storageKey="tnpsc-ui-theme">
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/syllabus" element={<Syllabus />} />
+              <Route path="/syllabus/g1" element={<SyllabusG1 />} />
+              <Route path="/syllabus/g2" element={<SyllabusG2 />} />
+              <Route path="/syllabus/g4" element={<SyllabusG4 />} />
+              <Route path="/previous-papers" element={<PreviousPapers />} />
+              <Route path="/books" element={<Books />} />
+              <Route path="/books/standards" element={<BooksStandards />} />
+              <Route path="/books/:grade" element={<StandardBooks />} />
+              <Route path="/tirukural" element={<Tirukural />} />
+              <Route path="/notes" element={<Notes />} />
+              <Route path="/poets" element={<Poets />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/about-tnpsc" element={<AboutTNPSC />} />
+              <Route path="/quiz" element={<Quiz />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
