@@ -6,6 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/hooks/use-theme";
 import Dashboard from "./pages/Dashboard";
 import Syllabus from "./pages/Syllabus";
+import SyllabusG1 from "./pages/SyllabusG1";
+import SyllabusG2 from "./pages/SyllabusG2";
+import SyllabusG4 from "./pages/SyllabusG4";
 import PreviousPapers from "./pages/PreviousPapers";
 import BooksStandards from "./pages/BooksStandards";
 import StandardBooks from "./pages/StandardBooks";
@@ -30,6 +33,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/syllabus" element={<Syllabus />} />
+              <Route path="/syllabus/g1" element={<SyllabusG1 />} />
+              <Route path="/syllabus/g2" element={<SyllabusG2 />} />
+              <Route path="/syllabus/g4" element={<SyllabusG4 />} />
               <Route path="/previous-papers" element={<PreviousPapers />} />
               <Route path="/books/standards" element={<BooksStandards />} />
               <Route path="/books/:grade" element={<StandardBooks />} />
