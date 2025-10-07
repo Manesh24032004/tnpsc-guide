@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ScrollText, Download, Upload, FileText, ArrowLeft } from 'lucide-react';
+import { ScrollText, Download, Upload, FileText, ArrowLeft, Eye } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Navbar } from '@/components/Layout/Navbar';
@@ -112,6 +112,21 @@ const SyllabusG2 = () => {
                 </label>
               </div>
               
+              <Button
+                variant="default"
+                className="w-full"
+                size="lg"
+                onClick={() => {
+                  if (uploadedFile) {
+                    window.open(URL.createObjectURL(uploadedFile), '_blank');
+                  }
+                }}
+                disabled={!uploadedFile}
+              >
+                <Eye className="h-5 w-5 mr-2" />
+                View G-2/IIA Syllabus PDF
+              </Button>
+
               <Button
                 variant="default"
                 className="w-full"
