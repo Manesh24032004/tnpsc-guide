@@ -1,56 +1,79 @@
 import { useParams, Link } from 'react-router-dom';
-import { BookOpen, ArrowLeft, Download } from 'lucide-react';
+import { BookOpen, ArrowLeft, Download, Home } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Navbar } from '@/components/Layout/Navbar';
 import { Footer } from '@/components/Layout/Footer';
 
-const subjectsByStandard: Record<string, { name: string; icon: string }[]> = {
+// Import subject images
+import tamilImg from '@/assets/subjects/tamil.png';
+import mathsImg from '@/assets/subjects/maths.png';
+import scienceImg from '@/assets/subjects/science.png';
+import socialImg from '@/assets/subjects/social.png';
+import sirapuTamilImg from '@/assets/subjects/sirapu-tamil.png';
+import historyImg from '@/assets/subjects/history.png';
+import economicsImg from '@/assets/subjects/economics.png';
+import politicalScienceImg from '@/assets/subjects/political-science.png';
+import indianCultureImg from '@/assets/subjects/indian-culture.png';
+
+const subjectImages: Record<string, string> = {
+  'Tamil': tamilImg,
+  'Maths': mathsImg,
+  'Science': scienceImg,
+  'Social': socialImg,
+  'Sirapu Tamil': sirapuTamilImg,
+  'History': historyImg,
+  'Economics': economicsImg,
+  'Political Science': politicalScienceImg,
+  'அரசியலும் இந்திய பண்பாடும்': indianCultureImg,
+};
+
+const subjectsByStandard: Record<string, { name: string; tamilName: string }[]> = {
   '6': [
-    { name: 'Tamil', icon: '📚' },
-    { name: 'Maths', icon: '🔢' },
-    { name: 'Science', icon: '🔬' },
-    { name: 'Social', icon: '🌍' },
+    { name: 'Tamil', tamilName: 'தமிழ்' },
+    { name: 'Maths', tamilName: 'கணிதம்' },
+    { name: 'Science', tamilName: 'அறிவியல்' },
+    { name: 'Social', tamilName: 'சமூக அறிவியல்' },
   ],
   '7': [
-    { name: 'Tamil', icon: '📚' },
-    { name: 'Maths', icon: '🔢' },
-    { name: 'Science', icon: '🔬' },
-    { name: 'Social', icon: '🌍' },
+    { name: 'Tamil', tamilName: 'தமிழ்' },
+    { name: 'Maths', tamilName: 'கணிதம்' },
+    { name: 'Science', tamilName: 'அறிவியல்' },
+    { name: 'Social', tamilName: 'சமூக அறிவியல்' },
   ],
   '8': [
-    { name: 'Tamil', icon: '📚' },
-    { name: 'Maths', icon: '🔢' },
-    { name: 'Science', icon: '🔬' },
-    { name: 'Social', icon: '🌍' },
+    { name: 'Tamil', tamilName: 'தமிழ்' },
+    { name: 'Maths', tamilName: 'கணிதம்' },
+    { name: 'Science', tamilName: 'அறிவியல்' },
+    { name: 'Social', tamilName: 'சமூக அறிவியல்' },
   ],
   '9': [
-    { name: 'Tamil', icon: '📚' },
-    { name: 'Maths', icon: '🔢' },
-    { name: 'Science', icon: '🔬' },
-    { name: 'Social', icon: '🌍' },
+    { name: 'Tamil', tamilName: 'தமிழ்' },
+    { name: 'Maths', tamilName: 'கணிதம்' },
+    { name: 'Science', tamilName: 'அறிவியல்' },
+    { name: 'Social', tamilName: 'சமூக அறிவியல்' },
   ],
   '10': [
-    { name: 'Tamil', icon: '📚' },
-    { name: 'Maths', icon: '🔢' },
-    { name: 'Science', icon: '🔬' },
-    { name: 'Social', icon: '🌍' },
+    { name: 'Tamil', tamilName: 'தமிழ்' },
+    { name: 'Maths', tamilName: 'கணிதம்' },
+    { name: 'Science', tamilName: 'அறிவியல்' },
+    { name: 'Social', tamilName: 'சமூக அறிவியல்' },
   ],
   '11': [
-    { name: 'Tamil', icon: '📚' },
-    { name: 'Sirapu Tamil', icon: '✨' },
-    { name: 'History', icon: '📜' },
-    { name: 'Economics', icon: '💰' },
-    { name: 'Political Science', icon: '⚖️' },
-    { name: 'அரசியலும் இந்திய பண்பாடும்', icon: '🏛️' },
+    { name: 'Tamil', tamilName: 'தமிழ்' },
+    { name: 'Sirapu Tamil', tamilName: 'சிறப்பு தமிழ்' },
+    { name: 'History', tamilName: 'வரலாறு' },
+    { name: 'Economics', tamilName: 'பொருளியல்' },
+    { name: 'Political Science', tamilName: 'அரசியல் அறிவியல்' },
+    { name: 'அரசியலும் இந்திய பண்பாடும்', tamilName: 'அரசியலும் இந்திய பண்பாடும்' },
   ],
   '12': [
-    { name: 'Tamil', icon: '📚' },
-    { name: 'Sirapu Tamil', icon: '✨' },
-    { name: 'History', icon: '📜' },
-    { name: 'Economics', icon: '💰' },
-    { name: 'Political Science', icon: '⚖️' },
-    { name: 'அரசியலும் இந்திய பண்பாடும்', icon: '🏛️' },
+    { name: 'Tamil', tamilName: 'தமிழ்' },
+    { name: 'Sirapu Tamil', tamilName: 'சிறப்பு தமிழ்' },
+    { name: 'History', tamilName: 'வரலாறு' },
+    { name: 'Economics', tamilName: 'பொருளியல்' },
+    { name: 'Political Science', tamilName: 'அரசியல் அறிவியல்' },
+    { name: 'அரசியலும் இந்திய பண்பாடும்', tamilName: 'அரசியலும் இந்திய பண்பாடும்' },
   ],
 };
 
@@ -70,8 +93,14 @@ const StandardBooks = () => {
       <Navbar />
       
       <main className="container mx-auto px-4 py-8">
-        <div className="mb-6">
-          <Link to="/books">
+        <div className="flex gap-4 mb-6">
+          <Link to="/">
+            <Button variant="outline" size="sm">
+              <Home className="h-4 w-4 mr-2" />
+              Back to Home
+            </Button>
+          </Link>
+          <Link to="/books/standards">
             <Button variant="outline" size="sm">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Standards
@@ -93,23 +122,41 @@ const StandardBooks = () => {
           {subjects.map((subject, index) => (
             <Card 
               key={subject.name}
-              className="p-6 transition-all duration-300 hover:shadow-elegant hover:scale-105 border-2 border-accent/30 hover:border-primary animate-slide-up"
+              className="p-6 transition-all duration-300 hover:shadow-elegant hover:scale-105 border-2 border-primary/20 hover:border-primary animate-slide-up rounded-[20px]"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="text-center mb-6">
-                <div className="text-5xl mb-3">{subject.icon}</div>
-                <h3 className="text-xl font-bold text-foreground mb-4">
+              <div className="text-center mb-4">
+                {/* Circular Subject Image */}
+                <div className="w-[150px] h-[150px] mx-auto mb-4 rounded-full border-2 border-primary/30 shadow-soft overflow-hidden bg-background">
+                  {subjectImages[subject.name] ? (
+                    <img 
+                      src={subjectImages[subject.name]} 
+                      alt={`${subject.name} icon`}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground text-sm">
+                      Add Image
+                    </div>
+                  )}
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-1">
                   {subject.name}
                 </h3>
+                <p className="text-sm text-muted-foreground">
+                  {subject.tamilName}
+                </p>
               </div>
 
+              {/* PDF File Card */}
               <div className="mb-4">
                 <div className="flex items-center gap-2 p-3 bg-primary/10 dark:bg-primary/20 rounded-lg">
                   <BookOpen className="h-5 w-5 text-primary" />
-                  <span className="text-sm font-medium">{subject.name} Book.pdf</span>
+                  <span className="text-sm font-medium truncate">{subject.name} Book.pdf</span>
                 </div>
               </div>
 
+              {/* Action Buttons */}
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" className="flex-1">
                   <BookOpen className="h-4 w-4 mr-2" />
