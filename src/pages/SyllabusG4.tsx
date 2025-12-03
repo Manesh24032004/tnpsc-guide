@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ClipboardList, Download, Upload, FileText, ArrowLeft, Eye } from 'lucide-react';
+import { ClipboardList, Download, Upload, FileText, ArrowLeft, Eye, Home } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Navbar } from '@/components/Layout/Navbar';
@@ -56,10 +56,16 @@ const SyllabusG4 = () => {
       <Navbar />
       
       <main className="container mx-auto px-4 py-8">
-        <Link to="/syllabus" className="inline-flex items-center text-primary hover:underline mb-6">
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Syllabus
-        </Link>
+        <div className="flex gap-4 mb-6">
+          <Link to="/" className="inline-flex items-center text-primary hover:underline">
+            <Home className="h-4 w-4 mr-2" />
+            Back to Home
+          </Link>
+          <Link to="/syllabus" className="inline-flex items-center text-primary hover:underline">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Syllabus
+          </Link>
+        </div>
 
         <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl font-bold text-primary mb-4">G-IV Syllabus</h1>
