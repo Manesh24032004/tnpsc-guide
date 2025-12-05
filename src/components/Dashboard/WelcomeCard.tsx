@@ -1,6 +1,7 @@
-import { GraduationCap, Play } from 'lucide-react';
+import { GraduationCap, Bot } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
 
 export const WelcomeCard = () => {
   return (
@@ -16,14 +17,16 @@ export const WelcomeCard = () => {
         Your magical guide to TNPSC success
       </p>
       
-      <Button 
-        variant="secondary" 
-        size="default"
-        className="font-bold px-6 py-2 shadow-elegant hover:shadow-glow transition-all duration-300 hover:scale-105"
-      >
-        <Play className="h-4 w-4 mr-2" />
-        Start Now
-      </Button>
+      <Link to="/ai-chat">
+        <Button 
+          variant="secondary" 
+          size="default"
+          className="font-bold px-6 py-2 shadow-elegant hover:shadow-glow transition-all duration-300 hover:scale-105"
+        >
+          <Bot className="h-4 w-4 mr-2" />
+          Start Now
+        </Button>
+      </Link>
     </Card>
   );
 };
