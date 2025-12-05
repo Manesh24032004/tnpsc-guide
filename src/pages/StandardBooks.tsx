@@ -117,17 +117,17 @@ const StandardBooks = () => {
           </p>
         </div>
 
-        {/* Subjects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {/* Subjects Grid - 30% smaller */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
           {subjects.map((subject, index) => (
             <Card 
               key={subject.name}
-              className="p-6 transition-all duration-300 hover:shadow-elegant hover:scale-105 border-2 border-primary/20 hover:border-primary animate-slide-up rounded-[20px]"
+              className="p-4 transition-all duration-300 hover:shadow-elegant hover:scale-105 border-2 border-primary/20 hover:border-primary animate-slide-up rounded-[14px]"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="text-center mb-4">
-                {/* Circular Subject Image */}
-                <div className="w-[150px] h-[150px] mx-auto mb-4 rounded-full border-2 border-primary/30 shadow-soft overflow-hidden bg-background">
+              <div className="text-center mb-3">
+                {/* Circular Subject Image - 30% smaller */}
+                <div className="w-[105px] h-[105px] mx-auto mb-3 rounded-full border-2 border-primary/30 shadow-soft overflow-hidden bg-background">
                   {subjectImages[subject.name] ? (
                     <img 
                       src={subjectImages[subject.name]} 
@@ -135,35 +135,35 @@ const StandardBooks = () => {
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground text-sm">
+                    <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground text-xs">
                       Add Image
                     </div>
                   )}
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-1">
+                <h3 className="text-base font-bold text-foreground mb-1">
                   {subject.name}
                 </h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-xs text-muted-foreground">
                   {subject.tamilName}
                 </p>
               </div>
 
-              {/* PDF File Card */}
-              <div className="mb-4">
-                <div className="flex items-center gap-2 p-3 bg-primary/10 dark:bg-primary/20 rounded-lg">
-                  <BookOpen className="h-5 w-5 text-primary" />
-                  <span className="text-sm font-medium truncate">{subject.name} Book.pdf</span>
+              {/* PDF File Card - smaller */}
+              <div className="mb-3">
+                <div className="flex items-center gap-2 p-2 bg-primary/10 dark:bg-primary/20 rounded-lg">
+                  <BookOpen className="h-4 w-4 text-primary" />
+                  <span className="text-xs font-medium truncate">{subject.name}.pdf</span>
                 </div>
               </div>
 
-              {/* Action Buttons */}
+              {/* Action Buttons - smaller */}
               <div className="flex gap-2">
-                <Button variant="outline" size="sm" className="flex-1">
-                  <BookOpen className="h-4 w-4 mr-2" />
+                <Button variant="outline" size="sm" className="flex-1 text-xs h-8">
+                  <BookOpen className="h-3 w-3 mr-1" />
                   View
                 </Button>
-                <Button variant="default" size="sm" className="flex-1">
-                  <Download className="h-4 w-4 mr-2" />
+                <Button variant="default" size="sm" className="flex-1 text-xs h-8">
+                  <Download className="h-3 w-3 mr-1" />
                   Download
                 </Button>
               </div>

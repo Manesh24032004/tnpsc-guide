@@ -14,6 +14,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 const navigationItems = [
   { href: '/', label: 'Home', icon: '🏠' },
+  { href: '/ai-chat', label: 'TNPSC Wizard AI', icon: '🤖' },
   { href: '/tirukural', label: 'திருக்குறள்', icon: '📜' },
   { href: '/notes', label: 'Study Notes', icon: '📔' },
   { href: '/poets', label: 'தமிழ் அறிஞர்கள்', icon: '👤' },
