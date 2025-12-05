@@ -55,33 +55,33 @@ const BooksStandards = () => {
           </p>
         </div>
 
-        {/* Standards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        {/* Standards Grid - 30% smaller */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-6xl mx-auto">
           {standards.map((standard, index) => (
             <Link 
               key={standard.id}
               to={`/books/${standard.grade}`}
             >
               <Card 
-                className="p-6 transition-all duration-300 hover:shadow-elegant hover:scale-105 border-2 border-primary/20 hover:border-primary animate-slide-up cursor-pointer h-full rounded-[20px]"
+                className="p-4 transition-all duration-300 hover:shadow-elegant hover:scale-105 border-2 border-primary/20 hover:border-primary animate-slide-up cursor-pointer h-full rounded-[14px]"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="text-center">
-                  {/* Circular Image Container */}
-                  <div className="w-40 h-40 mx-auto mb-4 rounded-full border-2 border-primary/30 shadow-soft overflow-hidden bg-background">
+                  {/* Circular Image Container - 30% smaller */}
+                  <div className="w-28 h-28 mx-auto mb-3 rounded-full border-2 border-primary/30 shadow-soft overflow-hidden bg-background">
                     <img 
                       src={standard.image} 
                       alt={`${standard.name} illustration`}
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground mb-1">
+                  <h3 className="text-lg font-bold text-foreground mb-1">
                     {standard.name}
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-2">
+                  <p className="text-xs text-muted-foreground mb-1">
                     {standard.tamilName}
                   </p>
-                  <p className="text-sm italic text-primary/70 mt-3">
+                  <p className="text-xs italic text-primary/70 mt-2">
                     {standard.quote}
                   </p>
                 </div>

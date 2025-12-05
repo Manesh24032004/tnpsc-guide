@@ -1,6 +1,5 @@
 import { FileText, Book, BookOpen } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
@@ -9,14 +8,6 @@ import tamilBookImg from '@/assets/tamil-book.jpg';
 import mathsBookImg from '@/assets/maths-book.jpg';
 import scienceBookImg from '@/assets/science-book.jpg';
 import socialBookImg from '@/assets/social-book.jpg';
-
-const previousYearQuestions = [
-  { name: '2025 G-IV', year: '2025' },
-  { name: '2025 G-1', year: '2025' },
-  { name: '2024 G-IV', year: '2024' },
-  { name: '2024 G-1', year: '2024' },
-  { name: '2023 G-IV', year: '2023' },
-];
 
 const books = [
   { name: 'Tamil', subject: 'Language', image: tamilBookImg },
@@ -28,7 +19,7 @@ const books = [
 export const ContentGrid = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      {/* Past Year Question Papers */}
+      {/* Past Year Question Papers - Simple Button Style like Books */}
       <Card className="p-6 h-fit animate-slide-up">
         <div className="flex items-center gap-4 p-2 border-b border-muted pb-4 mb-4">
           <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center shadow-soft">
@@ -36,26 +27,24 @@ export const ContentGrid = () => {
           </div>
           <div>
             <h3 className="text-xl font-bold text-foreground">Past Year Questions</h3>
-            <p className="text-sm text-muted-foreground">Old exam papers</p>
+            <p className="text-sm text-muted-foreground">முந்தைய ஆண்டு வினாத்தாள்கள்</p>
           </div>
         </div>
         
-        <ScrollArea className="h-[280px]">
-          <div className="space-y-3">
-            {previousYearQuestions.map((item, index) => (
-              <Link 
-                key={index}
-                to="/previous-papers"
-              >
-                <div
-                  className="bg-muted rounded-lg p-4 border-l-4 border-secondary cursor-pointer transition-all duration-300 hover:bg-secondary/20 hover:border-primary hover:shadow-soft"
-                >
-                  <div className="font-semibold text-foreground">{item.name}</div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </ScrollArea>
+        <div className="flex flex-col items-center justify-center py-8">
+          <p className="text-lg text-muted-foreground mb-6 text-center italic">
+            "பழைய வினாக்கள் புதிய வெற்றிக்கு வழி"
+          </p>
+          <Link to="/previous-papers">
+            <Button 
+              size="lg" 
+              className="text-base px-10 py-5 h-auto shadow-elegant hover:shadow-glow transition-all duration-300"
+            >
+              <FileText className="h-5 w-5 mr-2" />
+              View All Years
+            </Button>
+          </Link>
+        </div>
       </Card>
 
       {/* Books */}
