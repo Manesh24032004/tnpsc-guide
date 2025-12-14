@@ -192,7 +192,7 @@ export const Navbar = () => {
             className="text-primary-foreground text-xl sm:text-2xl md:text-3xl font-bold hover:scale-105 transition-transform duration-300 flex items-center gap-1 sm:gap-2 flex-shrink-0"
           >
             <GraduationCap className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
-            <span className="hidden xs:inline">TNPSC Wizard</span>
+            <span className="inline">TNPSC Wizard</span>
           </Link>
 
           {/* Search Bar and Notification */}
