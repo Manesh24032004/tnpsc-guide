@@ -20,6 +20,7 @@ import Notes from "./pages/Notes";
 import Poets from "./pages/Poets";
 import Admin from "./pages/Admin";
 import Auth from "./pages/Auth";
+import AdminLogin from "./pages/AdminLogin";
 import NotFound from "./pages/NotFound";
 import AboutTNPSC from "./pages/AboutTNPSC";
 import Quiz from "./pages/Quiz";
@@ -52,6 +53,7 @@ function App() {
                 <Route path="/notes" element={<Notes />} />
                 <Route path="/poets" element={<Poets />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/admin-login" element={<AdminLogin />} />
                 <Route path="/about-tnpsc" element={<AboutTNPSC />} />
                 <Route path="/quiz" element={<Quiz />} />
                 <Route path="/ai-chat" element={<TNPSCWizardAI />} />

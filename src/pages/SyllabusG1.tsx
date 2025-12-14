@@ -1,56 +1,12 @@
-import { useState } from 'react';
-import { BookOpen, Download, Upload, FileText, ArrowLeft, Eye, Home } from 'lucide-react';
+import { BookOpen, ArrowLeft, Home } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Navbar } from '@/components/Layout/Navbar';
 import { Footer } from '@/components/Layout/Footer';
-import { useToast } from '@/hooks/use-toast';
 import { Link } from 'react-router-dom';
+import { DocumentViewer } from '@/components/DocumentViewer';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const SyllabusG1 = () => {
-  const { toast } = useToast();
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-
-  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file && file.type === 'application/pdf') {
-      setUploadedFile(file);
-      toast({
-        title: "PDF Uploaded",
-        description: `${file.name} uploaded successfully`,
-      });
-    } else {
-      toast({
-        title: "Invalid file",
-        description: "Please upload a PDF file",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const handleDownload = () => {
-    if (uploadedFile) {
-      const url = URL.createObjectURL(uploadedFile);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = uploadedFile.name;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      toast({
-        title: "Download Started",
-        description: `Downloading ${uploadedFile.name}`,
-      });
-    } else {
-      toast({
-        title: "No file available",
-        description: "Please upload a PDF first",
-        variant: "destructive"
-      });
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-soft">
       <Navbar />
@@ -74,76 +30,41 @@ const SyllabusG1 = () => {
           </p>
         </div>
 
-        <div className="max-w-2xl mx-auto">
-          <Card className="p-8 transition-all duration-300 hover:shadow-elegant border-2 border-accent/30">
-            <div className="flex flex-col items-center mb-6">
-              <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center shadow-soft mb-6">
-                <BookOpen className="h-12 w-12 text-white" />
+        <div className="max-w-4xl mx-auto">
+          <Card className="p-6 sm:p-8 transition-all duration-300 hover:shadow-elegant border-2 border-accent/30">
+            <div className="flex flex-col items-center mb-8">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center shadow-soft mb-4">
+                <BookOpen className="h-10 w-10 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-foreground text-center mb-4">
-                Upload & Download G-1 Syllabus PDF
+              <h2 className="text-2xl font-bold text-foreground text-center">
+                Group 1 Syllabus Documents
               </h2>
             </div>
 
-            {uploadedFile && (
-              <div className="mb-6 p-4 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center gap-3">
-                <FileText className="h-6 w-6 text-primary" />
-                <span className="text-sm font-medium truncate">
-                  {uploadedFile.name}
-                </span>
-              </div>
-            )}
+            <Tabs defaultValue="prelims" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-6">
+                <TabsTrigger value="prelims">Prelims Syllabus</TabsTrigger>
+                <TabsTrigger value="mains">Mains Syllabus</TabsTrigger>
+              </TabsList>
 
-            <div className="space-y-3">
-              <div>
-                <input
-                  type="file"
-                  accept="application/pdf"
-                  onChange={handleUpload}
-                  className="hidden"
-                  id="upload-g1"
+              <TabsContent value="prelims">
+                <DocumentViewer 
+                  category="syllabus" 
+                  subcategory="G1-Prelims"
+                  title="G-1 Prelims Syllabus"
+                  showTitle={false}
                 />
-                <label htmlFor="upload-g1">
-                  <Button
-                    variant="outline"
-                    className="w-full"
-                    size="lg"
-                    asChild
-                  >
-                    <span className="cursor-pointer flex items-center justify-center">
-                      <Upload className="h-5 w-5 mr-2" />
-                      Upload G-1 Syllabus PDF
-                    </span>
-                  </Button>
-                </label>
-              </div>
-              
-              <Button
-                variant="default"
-                className="w-full"
-                size="lg"
-                onClick={() => {
-                  if (uploadedFile) {
-                    window.open(URL.createObjectURL(uploadedFile), '_blank');
-                  }
-                }}
-                disabled={!uploadedFile}
-              >
-                <Eye className="h-5 w-5 mr-2" />
-                View G-1 Syllabus PDF
-              </Button>
+              </TabsContent>
 
-              <Button
-                variant="default"
-                className="w-full"
-                size="lg"
-                onClick={handleDownload}
-                disabled={!uploadedFile}
-              >
-                <Download className="h-5 w-5 mr-2" />
-                Download G-1 Syllabus PDF
-              </Button>
-            </div>
+              <TabsContent value="mains">
+                <DocumentViewer 
+                  category="syllabus" 
+                  subcategory="G1-Mains"
+                  title="G-1 Mains Syllabus"
+                  showTitle={false}
+                />
+              </TabsContent>
+            </Tabs>
           </Card>
         </div>
       </main>
