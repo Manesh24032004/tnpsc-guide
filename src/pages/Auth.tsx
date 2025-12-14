@@ -150,7 +150,7 @@ const Auth = () => {
             <GraduationCap className="h-8 w-8 sm:h-10 sm:w-10 text-primary-foreground" />
           </div>
           <h1 className="text-xl sm:text-2xl font-bold text-primary">TNPSC Wizard</h1>
-          <p className="text-sm text-muted-foreground">Your magical guide to TNPSC success</p>
+          <p className="text-sm text-muted-foreground">User Login / Register</p>
         </div>
 
         <Tabs defaultValue="login" className="w-full">
@@ -312,6 +312,15 @@ const Auth = () => {
             </form>
           </TabsContent>
         </Tabs>
+
+        <div className="mt-6 pt-6 border-t border-border">
+          <p className="text-center text-sm text-muted-foreground">
+            Are you an admin?{' '}
+            <Button variant="link" className="p-0 h-auto" onClick={() => navigate('/admin-login')}>
+              Admin Login
+            </Button>
+          </p>
+        </div>
       </Card>
     </div>
   );

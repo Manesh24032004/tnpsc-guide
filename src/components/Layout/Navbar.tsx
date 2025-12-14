@@ -55,7 +55,8 @@ export const Navbar = () => {
           baseItems.push({ href: '/admin', label: 'Admin Dashboard', icon: '⚙️' });
         }
       } else {
-        baseItems.push({ href: '/auth', label: 'Login / Register', icon: '🔐' });
+        baseItems.push({ href: '/auth', label: 'User Login', icon: '🔐' });
+        baseItems.push({ href: '/admin-login', label: 'Admin Login', icon: '🛡️' });
       }
     }
 
