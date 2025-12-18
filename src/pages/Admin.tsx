@@ -50,7 +50,7 @@ const Admin = () => {
   ];
 
   const subcategories: Record<string, string[]> = {
-    'syllabus': ['G1', 'G2', 'G4'],
+    'syllabus': ['G1-Prelims', 'G1-Mains', 'G2-Prelims', 'G2-Mains', 'G2A-Mains', 'G4'],
     'previous-papers': ['2025', '2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015'],
     'books': ['6th', '7th', '8th', '9th', '10th', '11th', '12th'],
   };

@@ -115,7 +115,7 @@ export const Navbar = () => {
 
   return (
     <nav className="bg-gradient-primary border-b-4 border-secondary sticky top-0 z-50 shadow-elegant">
-      <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-5">
         <div className="flex items-center justify-between gap-2">
           {/* Menu Button */}
           <Sheet>
@@ -123,9 +123,9 @@ export const Navbar = () => {
               <Button 
                 variant="secondary" 
                 size="default" 
-                className="font-semibold shadow-soft hover:shadow-elegant transition-all duration-300 h-9 w-9 sm:h-10 sm:w-10 px-0 flex-shrink-0"
+                className="font-semibold shadow-soft hover:shadow-elegant transition-all duration-300 h-11 w-11 sm:h-12 sm:w-12 px-0 flex-shrink-0"
               >
-                <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
+                <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-72 sm:w-80">
@@ -190,9 +190,9 @@ export const Navbar = () => {
           {/* Brand */}
           <Link 
             to="/" 
-            className="text-primary-foreground text-xl sm:text-2xl md:text-3xl font-bold hover:scale-105 transition-transform duration-300 flex items-center gap-1 sm:gap-2 flex-shrink-0"
+            className="text-primary-foreground text-2xl sm:text-3xl md:text-4xl font-bold hover:scale-105 transition-transform duration-300 flex items-center gap-2 sm:gap-3 flex-shrink-0"
           >
-            <GraduationCap className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
+            <GraduationCap className="h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10" />
             <span className="inline">TNPSC Wizard</span>
           </Link>
 
@@ -210,7 +210,7 @@ export const Navbar = () => {
                     setShowSuggestions(true);
                   }}
                   onFocus={() => setShowSuggestions(true)}
-                  className="pl-7 sm:pl-10 pr-2 sm:pr-4 text-xs sm:text-sm h-9 sm:h-10 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
+                  className="pl-8 sm:pl-10 pr-3 sm:pr-4 text-sm sm:text-base h-11 sm:h-12 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
                 />
               </form>
               
