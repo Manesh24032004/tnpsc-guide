@@ -25,6 +25,8 @@ import AdminLogin from "./pages/AdminLogin";
 import NotFound from "./pages/NotFound";
 import AboutTNPSC from "./pages/AboutTNPSC";
 import Quiz from "./pages/Quiz";
+import QuizTamil from "./pages/QuizTamil";
+import QuizGS from "./pages/QuizGS";
 import TNPSCWizardAI from "./pages/TNPSCWizardAI";
 
 const queryClient = new QueryClient();
@@ -58,6 +60,8 @@ function App() {
                 <Route path="/admin-login" element={<AdminLogin />} />
                 <Route path="/about-tnpsc" element={<AboutTNPSC />} />
                 <Route path="/quiz" element={<Quiz />} />
+                <Route path="/quiz/tamil" element={<QuizTamil />} />
+                <Route path="/quiz/gs" element={<QuizGS />} />
                 <Route path="/ai-chat" element={<TNPSCWizardAI />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
