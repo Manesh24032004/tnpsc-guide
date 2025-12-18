@@ -327,23 +327,21 @@ const TNPSCWizardAI = () => {
               <p className="text-sm opacity-80">உங்கள் தேர்வு உதவியாளர்</p>
             </div>
           </div>
-          <div className="flex gap-2">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="text-primary-foreground hover:bg-primary-foreground/20"
+          <div className="flex gap-4">
+            <button 
+              className="flex flex-col items-center text-primary-foreground hover:opacity-80 transition-opacity"
               onClick={() => setShowSidebar(true)}
             >
               <History className="h-5 w-5" />
-            </Button>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="text-primary-foreground hover:bg-primary-foreground/20"
+              <span className="text-xs mt-1">History</span>
+            </button>
+            <button 
+              className="flex flex-col items-center text-primary-foreground hover:opacity-80 transition-opacity"
               onClick={handleNewChat}
             >
               <Plus className="h-5 w-5" />
-            </Button>
+              <span className="text-xs mt-1">New Chat</span>
+            </button>
           </div>
         </div>
 
