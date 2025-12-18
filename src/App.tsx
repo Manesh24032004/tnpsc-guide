@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/hooks/use-theme";
 import { AuthProvider } from "@/hooks/useAuth";
+import ScrollToTop from "@/components/ScrollToTop";
 import Dashboard from "./pages/Dashboard";
 import Syllabus from "./pages/Syllabus";
 import SyllabusG1 from "./pages/SyllabusG1";
@@ -37,6 +38,7 @@ function App() {
             <Toaster />
             <Sonner />
             <BrowserRouter>
+              <ScrollToTop />
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/auth" element={<Auth />} />
