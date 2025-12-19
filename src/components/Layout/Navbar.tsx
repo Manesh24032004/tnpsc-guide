@@ -115,17 +115,17 @@ export const Navbar = () => {
 
   return (
     <nav className="bg-gradient-primary border-b-4 border-secondary sticky top-0 z-50 shadow-elegant">
-      <div className="container mx-auto px-4 sm:px-5 py-5 sm:py-6">
-        <div className="flex items-center justify-between gap-3">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-5">
+        <div className="flex items-center justify-between gap-2">
           {/* Menu Button */}
           <Sheet>
             <SheetTrigger asChild>
               <Button 
                 variant="secondary" 
                 size="default" 
-                className="font-semibold shadow-soft hover:shadow-elegant transition-all duration-300 h-13 w-13 sm:h-14 sm:w-14 px-0 flex-shrink-0"
+                className="font-semibold shadow-soft hover:shadow-elegant transition-all duration-300 h-11 w-11 sm:h-12 sm:w-12 px-0 flex-shrink-0"
               >
-                <Menu className="h-6 w-6 sm:h-7 sm:w-7" />
+                <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-72 sm:w-80">
@@ -190,17 +190,17 @@ export const Navbar = () => {
           {/* Brand */}
           <Link 
             to="/" 
-            className="text-primary-foreground text-3xl sm:text-4xl md:text-5xl font-bold hover:scale-105 transition-transform duration-300 flex items-center gap-3 sm:gap-4 flex-shrink-0"
+            className="text-primary-foreground text-2xl sm:text-3xl md:text-4xl font-bold hover:scale-105 transition-transform duration-300 flex items-center gap-2 sm:gap-3 flex-shrink-0"
           >
-            <GraduationCap className="h-9 w-9 sm:h-10 sm:w-10 md:h-12 md:w-12" />
+            <GraduationCap className="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10" />
             <span className="inline">TNPSC Wizard</span>
           </Link>
 
           {/* Search Bar and Notification */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div ref={searchRef} className="relative w-36 sm:w-44 md:w-52">
+            <div className="flex items-center gap-2">
+            <div ref={searchRef} className="relative w-32 sm:w-40 md:w-48">
               <form onSubmit={handleSearch}>
-                <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground z-10" />
+                <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground z-10" />
                 <Input
                   type="text"
                   placeholder="Search..."
@@ -210,7 +210,7 @@ export const Navbar = () => {
                     setShowSuggestions(true);
                   }}
                   onFocus={() => setShowSuggestions(true)}
-                  className="pl-10 sm:pl-12 pr-4 sm:pr-5 text-base sm:text-lg h-13 sm:h-14 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
+                  className="pl-8 sm:pl-10 pr-3 sm:pr-4 text-sm sm:text-base h-10 sm:h-11 bg-card border-2 border-accent/30 focus:border-secondary rounded-full transition-all duration-300 focus:shadow-soft"
                 />
               </form>
               
@@ -234,8 +234,8 @@ export const Navbar = () => {
             {/* Notifications */}
             <Popover open={showNotifications} onOpenChange={setShowNotifications}>
               <PopoverTrigger asChild>
-                <Button variant="secondary" size="default" className="h-11 w-11 sm:h-12 sm:w-12 px-0 relative flex-shrink-0">
-                  <Bell className="h-5 w-5 sm:h-6 sm:w-6" />
+                <Button variant="secondary" size="default" className="h-9 w-9 sm:h-10 sm:w-10 px-0 relative flex-shrink-0">
+                  <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
                   {unreadCount > 0 && (
                     <span className="absolute -top-1 -right-1 h-5 w-5 bg-destructive rounded-full text-[11px] text-destructive-foreground flex items-center justify-center">
                       {unreadCount}
