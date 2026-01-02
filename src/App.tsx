@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/hooks/use-theme";
-import { AuthProvider } from "@/hooks/useAuth";
 import ScrollToTop from "@/components/ScrollToTop";
 import Dashboard from "./pages/Dashboard";
 import Syllabus from "./pages/Syllabus";
@@ -20,10 +19,7 @@ import Tirukural from "./pages/Tirukural";
 import Notes from "./pages/Notes";
 import Poets from "./pages/Poets";
 import Admin from "./pages/Admin";
-import Auth from "./pages/Auth";
-import AdminLogin from "./pages/AdminLogin";
 import NotFound from "./pages/NotFound";
-import AboutTNPSC from "./pages/AboutTNPSC";
 import Quiz from "./pages/Quiz";
 import QuizTamil from "./pages/QuizTamil";
 import QuizGS from "./pages/QuizGS";
@@ -35,39 +31,34 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="tnpsc-ui-theme">
-        <AuthProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <ScrollToTop />
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/syllabus" element={<Syllabus />} />
-                <Route path="/syllabus/g1" element={<SyllabusG1 />} />
-                <Route path="/syllabus/g2" element={<SyllabusG2 />} />
-                <Route path="/syllabus/g4" element={<SyllabusG4 />} />
-                <Route path="/previous-papers" element={<PreviousPapers />} />
-                <Route path="/previous-papers/:year" element={<PapersByYear />} />
-                <Route path="/previous-papers/:year/:group" element={<PapersByGroup />} />
-                <Route path="/books/standards" element={<BooksStandards />} />
-                <Route path="/books/:grade" element={<StandardBooks />} />
-                <Route path="/tirukural" element={<Tirukural />} />
-                <Route path="/notes" element={<Notes />} />
-                <Route path="/poets" element={<Poets />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/admin-login" element={<AdminLogin />} />
-                <Route path="/about-tnpsc" element={<AboutTNPSC />} />
-                <Route path="/quiz" element={<Quiz />} />
-                <Route path="/quiz/tamil" element={<QuizTamil />} />
-                <Route path="/quiz/gs" element={<QuizGS />} />
-                <Route path="/ai-chat" element={<TNPSCWizardAI />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/syllabus" element={<Syllabus />} />
+              <Route path="/syllabus/g1" element={<SyllabusG1 />} />
+              <Route path="/syllabus/g2" element={<SyllabusG2 />} />
+              <Route path="/syllabus/g4" element={<SyllabusG4 />} />
+              <Route path="/previous-papers" element={<PreviousPapers />} />
+              <Route path="/previous-papers/:year" element={<PapersByYear />} />
+              <Route path="/previous-papers/:year/:group" element={<PapersByGroup />} />
+              <Route path="/books/standards" element={<BooksStandards />} />
+              <Route path="/books/:grade" element={<StandardBooks />} />
+              <Route path="/tirukural" element={<Tirukural />} />
+              <Route path="/notes" element={<Notes />} />
+              <Route path="/poets" element={<Poets />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/quiz" element={<Quiz />} />
+              <Route path="/quiz/tamil" element={<QuizTamil />} />
+              <Route path="/quiz/gs" element={<QuizGS />} />
+              <Route path="/ai-chat" element={<TNPSCWizardAI />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
