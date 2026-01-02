@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Menu, Search, GraduationCap, Bell, LogOut, User } from 'lucide-react';
+import { Menu, Search, GraduationCap, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -16,8 +16,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { useAuth } from '@/hooks/useAuth';
-import { toast } from '@/hooks/use-toast';
 
 const searchSuggestions = [
   { label: 'Syllabus', href: '/syllabus', icon: '📋' },
@@ -26,6 +24,14 @@ const searchSuggestions = [
   { label: 'திருக்குறள்', href: '/tirukural', icon: '📜' },
   { label: 'Study Notes', href: '/notes', icon: '📔' },
   { label: 'Tamil Scholars', href: '/poets', icon: '👤' },
+];
+
+const navigationItems = [
+  { href: '/', label: 'Home', icon: '🏠' },
+  { href: '/tirukural', label: 'திருக்குறள்', icon: '📜' },
+  { href: '/notes', label: 'Study Notes', icon: '📔' },
+  { href: '/poets', label: 'தமிழ் அறிஞர்கள்', icon: '👤' },
+  { href: '/quiz', label: 'Quiz', icon: '📝' },
 ];
 
 export const Navbar = () => {
@@ -38,30 +44,6 @@ export const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
-  const { user, isAdmin, signOut, loading } = useAuth();
-
-  const getNavigationItems = () => {
-    const baseItems = [
-      { href: '/', label: 'Home', icon: '🏠' },
-      { href: '/tirukural', label: 'திருக்குறள்', icon: '📜' },
-      { href: '/notes', label: 'Study Notes', icon: '📔' },
-      { href: '/poets', label: 'தமிழ் அறிஞர்கள்', icon: '👤' },
-      { href: '/about-tnpsc', label: 'About TNPSC', icon: 'ℹ️' },
-    ];
-
-    if (!loading) {
-      if (user) {
-        if (isAdmin) {
-          baseItems.push({ href: '/admin', label: 'Admin Dashboard', icon: '⚙️' });
-        }
-      } else {
-        baseItems.push({ href: '/auth', label: 'User Login', icon: '🔐' });
-        baseItems.push({ href: '/admin-login', label: 'Admin Login', icon: '🛡️' });
-      }
-    }
-
-    return baseItems;
-  };
 
   const filteredSuggestions = searchSuggestions.filter(item =>
     item.label.toLowerCase().includes(searchQuery.toLowerCase())
@@ -85,15 +67,6 @@ export const Navbar = () => {
     navigate(href);
     setSearchQuery('');
     setShowSuggestions(false);
-  };
-
-  const handleLogout = async () => {
-    await signOut();
-    navigate('/');
-    toast({
-      title: "Logged Out",
-      description: "You have been successfully logged out.",
-    });
   };
 
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -143,7 +116,7 @@ export const Navbar = () => {
                 </SheetDescription>
               </SheetHeader>
               <div className="mt-6 space-y-2">
-                {getNavigationItems().map((item) => (
+                {navigationItems.map((item) => (
                   <Link
                     key={item.href}
                     to={item.href}
@@ -157,33 +130,7 @@ export const Navbar = () => {
                     <span className="font-medium text-sm sm:text-base">{item.label}</span>
                   </Link>
                 ))}
-                
-                {/* Logout in menu for logged in users */}
-                {user && (
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-destructive/10 w-full text-left"
-                  >
-                    <LogOut className="h-4 w-4 sm:h-5 sm:w-5" />
-                    <span className="font-medium text-sm sm:text-base">Logout</span>
-                  </button>
-                )}
               </div>
-              
-              {/* User info at bottom of menu */}
-              {user && (
-                <div className="absolute bottom-6 left-4 right-4 p-3 bg-muted rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                      <User className="h-4 w-4 text-primary-foreground" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium truncate">{user.email}</p>
-                      <p className="text-xs text-muted-foreground">{isAdmin ? 'Admin' : 'User'}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
             </SheetContent>
           </Sheet>
 
