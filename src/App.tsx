@@ -5,7 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/hooks/use-theme";
 import ScrollToTop from "@/components/ScrollToTop";
+import { Landing } from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
+import Auth from "./pages/Auth";
 import Syllabus from "./pages/Syllabus";
 import SyllabusG1 from "./pages/SyllabusG1";
 import SyllabusG2 from "./pages/SyllabusG2";
@@ -24,6 +26,7 @@ import Quiz from "./pages/Quiz";
 import QuizTamil from "./pages/QuizTamil";
 import QuizGS from "./pages/QuizGS";
 import TNPSCWizardAI from "./pages/TNPSCWizardAI";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -37,24 +40,26 @@ function App() {
           <BrowserRouter>
             <ScrollToTop />
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/syllabus" element={<Syllabus />} />
-              <Route path="/syllabus/g1" element={<SyllabusG1 />} />
-              <Route path="/syllabus/g2" element={<SyllabusG2 />} />
-              <Route path="/syllabus/g4" element={<SyllabusG4 />} />
-              <Route path="/previous-papers" element={<PreviousPapers />} />
-              <Route path="/previous-papers/:year" element={<PapersByYear />} />
-              <Route path="/previous-papers/:year/:group" element={<PapersByGroup />} />
-              <Route path="/books/standards" element={<BooksStandards />} />
-              <Route path="/books/:grade" element={<StandardBooks />} />
-              <Route path="/tirukural" element={<Tirukural />} />
-              <Route path="/notes" element={<Notes />} />
-              <Route path="/poets" element={<Poets />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/quiz" element={<Quiz />} />
-              <Route path="/quiz/tamil" element={<QuizTamil />} />
-              <Route path="/quiz/gs" element={<QuizGS />} />
-              <Route path="/ai-chat" element={<TNPSCWizardAI />} />
+              <Route path="/" element={<Landing />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/home" element={<ProtectedRoute requireAdmin={false}><Dashboard /></ProtectedRoute>} />
+              <Route path="/syllabus" element={<ProtectedRoute requireAdmin={false}><Syllabus /></ProtectedRoute>} />
+              <Route path="/syllabus/g1" element={<ProtectedRoute requireAdmin={false}><SyllabusG1 /></ProtectedRoute>} />
+              <Route path="/syllabus/g2" element={<ProtectedRoute requireAdmin={false}><SyllabusG2 /></ProtectedRoute>} />
+              <Route path="/syllabus/g4" element={<ProtectedRoute requireAdmin={false}><SyllabusG4 /></ProtectedRoute>} />
+              <Route path="/previous-papers" element={<ProtectedRoute requireAdmin={false}><PreviousPapers /></ProtectedRoute>} />
+              <Route path="/previous-papers/:year" element={<ProtectedRoute requireAdmin={false}><PapersByYear /></ProtectedRoute>} />
+              <Route path="/previous-papers/:year/:group" element={<ProtectedRoute requireAdmin={false}><PapersByGroup /></ProtectedRoute>} />
+              <Route path="/books/standards" element={<ProtectedRoute requireAdmin={false}><BooksStandards /></ProtectedRoute>} />
+              <Route path="/books/:grade" element={<ProtectedRoute requireAdmin={false}><StandardBooks /></ProtectedRoute>} />
+              <Route path="/tirukural" element={<ProtectedRoute requireAdmin={false}><Tirukural /></ProtectedRoute>} />
+              <Route path="/notes" element={<ProtectedRoute requireAdmin={false}><Notes /></ProtectedRoute>} />
+              <Route path="/poets" element={<ProtectedRoute requireAdmin={false}><Poets /></ProtectedRoute>} />
+              <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+              <Route path="/quiz" element={<ProtectedRoute requireAdmin={false}><Quiz /></ProtectedRoute>} />
+              <Route path="/quiz/tamil" element={<ProtectedRoute requireAdmin={false}><QuizTamil /></ProtectedRoute>} />
+              <Route path="/quiz/gs" element={<ProtectedRoute requireAdmin={false}><QuizGS /></ProtectedRoute>} />
+              <Route path="/ai-chat" element={<ProtectedRoute requireAdmin={false}><TNPSCWizardAI /></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

@@ -16,7 +16,7 @@ export const ProtectedRoute = ({ children, requireAdmin = true }: ProtectedRoute
       if (!user) {
         navigate('/auth');
       } else if (requireAdmin && !isAdmin) {
-        navigate('/');
+        navigate('/home');
       }
     }
   }, [user, loading, isAdmin, requireAdmin, navigate]);

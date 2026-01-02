@@ -27,7 +27,7 @@ const searchSuggestions = [
 ];
 
 const navigationItems = [
-  { href: '/', label: 'Home', icon: '🏠' },
+  { href: '/home', label: 'Home', icon: '🏠' },
   { href: '/tirukural', label: 'திருக்குறள்', icon: '📜' },
   { href: '/notes', label: 'Study Notes', icon: '📔' },
   { href: '/poets', label: 'தமிழ் அறிஞர்கள்', icon: '👤' },
@@ -136,7 +136,7 @@ export const Navbar = () => {
 
           {/* Brand */}
           <Link 
-            to="/" 
+            to="/home" 
             className="text-primary-foreground text-2xl sm:text-3xl md:text-4xl font-bold hover:scale-105 transition-transform duration-300 flex items-center gap-2 sm:gap-3 flex-shrink-0"
           >
             <GraduationCap className="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10" />
