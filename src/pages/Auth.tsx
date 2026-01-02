@@ -43,7 +43,7 @@ const Auth = () => {
 
   useEffect(() => {
     if (!loading && user) {
-      navigate('/');
+      navigate('/home');
     }
   }, [user, loading, navigate]);
 
@@ -83,7 +83,7 @@ const Auth = () => {
         title: "Login Successful",
         description: "Welcome back!",
       });
-      navigate('/');
+      navigate('/home');
     }
   };
 
@@ -129,7 +129,7 @@ const Auth = () => {
         title: "Registration Successful",
         description: "Welcome to TNPSC Wizard!",
       });
-      navigate('/');
+      navigate('/home');
     }
   };
 
@@ -315,10 +315,7 @@ const Auth = () => {
 
         <div className="mt-6 pt-6 border-t border-border">
           <p className="text-center text-sm text-muted-foreground">
-            Are you an admin?{' '}
-            <Button variant="link" className="p-0 h-auto" onClick={() => navigate('/admin-login')}>
-              Admin Login
-            </Button>
+            By signing up, you agree to our Terms of Service
           </p>
         </div>
       </Card>
