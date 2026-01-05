@@ -3,9 +3,24 @@ import { Navbar } from '@/components/Layout/Navbar';
 import { Footer } from '@/components/Layout/Footer';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { FileText, BookOpen, Brain, History, Eye, Download, ChevronDown, ChevronUp } from 'lucide-react';
+import { 
+  FileText, 
+  BookOpen, 
+  Brain, 
+  History, 
+  Eye, 
+  Download, 
+  ChevronDown, 
+  ChevronUp,
+  Calculator,
+  Microscope,
+  Landmark,
+  Scale,
+  Home
+} from 'lucide-react';
 import { toast } from 'sonner';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Link } from 'react-router-dom';
 
 interface NoteTopic {
   name: string;
@@ -17,7 +32,6 @@ interface NoteCategory {
   title: string;
   icon: typeof BookOpen;
   topics: NoteTopic[];
-  count: number;
 }
 
 const noteCategories: NoteCategory[] = [
@@ -33,11 +47,10 @@ const noteCategories: NoteCategory[] = [
       { name: 'தொகைநூல்கள்', pdfUrl: '/pdfs/thogainoolkal.pdf' },
       { name: 'திருக்குறள்', pdfUrl: '/pdfs/thirukkural.pdf' },
     ],
-    count: 45,
   },
   {
     id: 2,
-    title: 'History Notes',
+    title: 'History',
     icon: History,
     topics: [
       { name: 'பண்டைய வரலாறு', pdfUrl: '/pdfs/ancient-history.pdf' },
@@ -47,35 +60,57 @@ const noteCategories: NoteCategory[] = [
       { name: 'தமிழக வரலாறு', pdfUrl: '/pdfs/tamilnadu-history.pdf' },
       { name: 'உலக வரலாறு', pdfUrl: '/pdfs/world-history.pdf' },
     ],
-    count: 38,
   },
   {
     id: 3,
-    title: 'General Knowledge',
-    icon: Brain,
+    title: 'Maths',
+    icon: Calculator,
     topics: [
-      { name: 'அறிவியல்', pdfUrl: '/pdfs/science.pdf' },
-      { name: 'புவியியல்', pdfUrl: '/pdfs/geography.pdf' },
-      { name: 'பொருளாதாரம்', pdfUrl: '/pdfs/economics.pdf' },
-      { name: 'அரசியல்', pdfUrl: '/pdfs/polity.pdf' },
-      { name: 'சுற்றுச்சூழல்', pdfUrl: '/pdfs/environment.pdf' },
-      { name: 'கணிதம்', pdfUrl: '/pdfs/aptitude.pdf' },
+      { name: 'எண் கணிதம்', pdfUrl: '/pdfs/number-system.pdf' },
+      { name: 'சதவீதம்', pdfUrl: '/pdfs/percentage.pdf' },
+      { name: 'விகிதம் & விகிதாசாரம்', pdfUrl: '/pdfs/ratio.pdf' },
+      { name: 'லாபம் & நஷ்டம்', pdfUrl: '/pdfs/profit-loss.pdf' },
+      { name: 'நேரம் & வேலை', pdfUrl: '/pdfs/time-work.pdf' },
+      { name: 'வட்டி', pdfUrl: '/pdfs/interest.pdf' },
     ],
-    count: 52,
   },
   {
     id: 4,
-    title: 'Current Affairs',
-    icon: FileText,
+    title: 'Science',
+    icon: Microscope,
     topics: [
-      { name: 'தேசிய செய்திகள்', pdfUrl: '/pdfs/national-news.pdf' },
-      { name: 'சர்வதேச செய்திகள்', pdfUrl: '/pdfs/international-news.pdf' },
-      { name: 'விளையாட்டு', pdfUrl: '/pdfs/sports.pdf' },
-      { name: 'விருதுகள்', pdfUrl: '/pdfs/awards.pdf' },
-      { name: 'அறிவியல் & தொழில்நுட்பம்', pdfUrl: '/pdfs/science-tech.pdf' },
-      { name: 'தமிழ்நாடு நடப்பு', pdfUrl: '/pdfs/tn-current.pdf' },
+      { name: 'இயற்பியல்', pdfUrl: '/pdfs/physics.pdf' },
+      { name: 'வேதியியல்', pdfUrl: '/pdfs/chemistry.pdf' },
+      { name: 'உயிரியல்', pdfUrl: '/pdfs/biology.pdf' },
+      { name: 'தாவரவியல்', pdfUrl: '/pdfs/botany.pdf' },
+      { name: 'விலங்கியல்', pdfUrl: '/pdfs/zoology.pdf' },
+      { name: 'சுற்றுச்சூழல்', pdfUrl: '/pdfs/environment.pdf' },
     ],
-    count: 67,
+  },
+  {
+    id: 5,
+    title: 'Economics',
+    icon: Landmark,
+    topics: [
+      { name: 'இந்திய பொருளாதாரம்', pdfUrl: '/pdfs/indian-economy.pdf' },
+      { name: 'தமிழ்நாடு பொருளாதாரம்', pdfUrl: '/pdfs/tn-economy.pdf' },
+      { name: 'பணவியல்', pdfUrl: '/pdfs/monetary.pdf' },
+      { name: 'வங்கி & நிதி', pdfUrl: '/pdfs/banking.pdf' },
+      { name: 'திட்டமிடல்', pdfUrl: '/pdfs/planning.pdf' },
+    ],
+  },
+  {
+    id: 6,
+    title: 'Polity',
+    icon: Scale,
+    topics: [
+      { name: 'இந்திய அரசியலமைப்பு', pdfUrl: '/pdfs/constitution.pdf' },
+      { name: 'மத்திய அரசு', pdfUrl: '/pdfs/central-govt.pdf' },
+      { name: 'மாநில அரசு', pdfUrl: '/pdfs/state-govt.pdf' },
+      { name: 'உள்ளாட்சி', pdfUrl: '/pdfs/local-govt.pdf' },
+      { name: 'நீதித்துறை', pdfUrl: '/pdfs/judiciary.pdf' },
+      { name: 'தேர்தல்', pdfUrl: '/pdfs/election.pdf' },
+    ],
   },
 ];
 
@@ -101,6 +136,13 @@ const Notes = () => {
       <Navbar />
       
       <main className="container mx-auto px-4 py-8">
+        <div className="flex gap-4 mb-6">
+          <Link to="/home" className="inline-flex items-center text-primary hover:underline">
+            <Home className="h-4 w-4 mr-2" />
+            Back to Home
+          </Link>
+        </div>
+
         <div className="text-center mb-8 animate-fade-in">
           <h1 className="text-4xl font-bold text-primary mb-4">Study Notes</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-2">
@@ -111,7 +153,7 @@ const Notes = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {noteCategories.map((category, index) => {
             const Icon = category.icon;
             const isOpen = openCategories.includes(category.id);
@@ -124,19 +166,19 @@ const Notes = () => {
               >
                 <Collapsible open={isOpen} onOpenChange={() => toggleCategory(category.id)}>
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="w-16 h-16 bg-gradient-primary rounded-lg flex items-center justify-center shadow-soft flex-shrink-0">
-                      <Icon className="h-8 w-8 text-primary-foreground" />
+                    <div className="w-14 h-14 bg-gradient-primary rounded-lg flex items-center justify-center shadow-soft flex-shrink-0">
+                      <Icon className="h-7 w-7 text-primary-foreground" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-foreground mb-2">
+                      <h3 className="text-xl font-bold text-foreground mb-1">
                         {category.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        {category.count} notes available
+                      <p className="text-sm text-muted-foreground">
+                        {category.topics.length} topics
                       </p>
                     </div>
                     <CollapsibleTrigger asChild>
-                      <Button variant="ghost" size="sm" className="mt-1">
+                      <Button variant="ghost" size="sm">
                         {isOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
                       </Button>
                     </CollapsibleTrigger>
@@ -225,16 +267,6 @@ const Notes = () => {
             );
           })}
         </div>
-
-        <Card className="mt-8 p-6 max-w-3xl mx-auto bg-gradient-primary text-primary-foreground animate-fade-in">
-          <h3 className="text-xl font-bold mb-3">📚 Quick Tips for Note-Taking</h3>
-          <ul className="space-y-2 text-primary-foreground/90">
-            <li>✓ குறிப்புகளை தினமும் மதிப்பாய்வு செய்யுங்கள்</li>
-            <li>✓ முக்கிய புள்ளிகளை சிறப்பாக குறிக்கவும்</li>
-            <li>✓ தலைப்புகளை வகைப்படுத்தி வைக்கவும்</li>
-            <li>✓ தொடர்ந்து புதுப்பித்துக் கொள்ளுங்கள்</li>
-          </ul>
-        </Card>
       </main>
       
       <Footer />
