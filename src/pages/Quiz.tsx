@@ -1,7 +1,7 @@
 import { Navbar } from '@/components/Layout/Navbar';
 import { Footer } from '@/components/Layout/Footer';
 import { Card } from '@/components/ui/card';
-import { Brain, BookOpen, Globe, Home, ArrowRight } from 'lucide-react';
+import { Brain, BookOpen, Globe, Calculator, Home, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const quizCategories = [
@@ -19,6 +19,13 @@ const quizCategories = [
     href: '/quiz/gs',
     gradient: 'from-blue-500 to-purple-500',
   },
+  {
+    title: 'Maths Quiz',
+    description: 'Aptitude and mathematical reasoning',
+    icon: Calculator,
+    href: '/quiz/maths',
+    gradient: 'from-green-500 to-teal-500',
+  },
 ];
 
 const Quiz = () => {
@@ -28,7 +35,7 @@ const Quiz = () => {
       
       <main className="container mx-auto px-4 py-8">
         <div className="flex gap-4 mb-6">
-          <Link to="/" className="inline-flex items-center text-primary hover:underline">
+          <Link to="/home" className="inline-flex items-center text-primary hover:underline">
             <Home className="h-4 w-4 mr-2" />
             Back to Home
           </Link>
@@ -44,7 +51,7 @@ const Quiz = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {quizCategories.map((category, index) => {
             const Icon = category.icon;
             return (

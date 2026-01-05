@@ -25,6 +25,7 @@ import NotFound from "./pages/NotFound";
 import Quiz from "./pages/Quiz";
 import QuizTamil from "./pages/QuizTamil";
 import QuizGS from "./pages/QuizGS";
+import QuizMaths from "./pages/QuizMaths";
 import TNPSCWizardAI from "./pages/TNPSCWizardAI";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
@@ -59,6 +60,7 @@ function App() {
               <Route path="/quiz" element={<ProtectedRoute requireAdmin={false}><Quiz /></ProtectedRoute>} />
               <Route path="/quiz/tamil" element={<ProtectedRoute requireAdmin={false}><QuizTamil /></ProtectedRoute>} />
               <Route path="/quiz/gs" element={<ProtectedRoute requireAdmin={false}><QuizGS /></ProtectedRoute>} />
+              <Route path="/quiz/maths" element={<ProtectedRoute requireAdmin={false}><QuizMaths /></ProtectedRoute>} />
               <Route path="/ai-chat" element={<ProtectedRoute requireAdmin={false}><TNPSCWizardAI /></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
