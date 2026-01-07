@@ -129,11 +129,11 @@ export const Navbar = () => {
   return (
     <nav className="bg-gradient-primary text-primary-foreground sticky top-0 z-50 shadow-elegant">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/home" className="flex items-center gap-2">
             <GraduationCap className="h-8 w-8" />
-            <span className="text-2xl font-bold hidden sm:inline">TNPSC Wizard</span>
+            <span className="text-xl font-bold whitespace-nowrap">TNPSC Wizard</span>
           </Link>
 
           {/* Menu Button - Left Side */}
@@ -173,8 +173,8 @@ export const Navbar = () => {
             </SheetContent>
           </Sheet>
 
-          {/* Search Bar - Desktop - 70% width */}
-          <div ref={searchRef} className="hidden md:flex items-center w-[70%] max-w-xl mx-4 relative">
+          {/* Search Bar - Desktop - 40% width */}
+          <div ref={searchRef} className="hidden md:flex items-center w-[40%] max-w-md mx-4 relative">
             <form onSubmit={handleSearch} className="w-full">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -192,8 +192,8 @@ export const Navbar = () => {
               </div>
             </form>
             
-            {/* Search Suggestions Dropdown */}
-            {showSuggestions && searchQuery && filteredSuggestions.length > 0 && (
+            {/* Search Suggestions Dropdown - Shows on focus */}
+            {showSuggestions && filteredSuggestions.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-elegant z-50 overflow-hidden">
                 {filteredSuggestions.map((item) => (
                   <button
