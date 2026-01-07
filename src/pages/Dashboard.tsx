@@ -1,5 +1,6 @@
 import { Navbar } from '@/components/Layout/Navbar';
 import { Footer } from '@/components/Layout/Footer';
+import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { 
@@ -164,6 +165,7 @@ const Dashboard = () => {
       </main>
       
       <Footer />
+      <ScrollToTopButton />
     </div>
   );
 };

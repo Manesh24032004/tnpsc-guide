@@ -6,6 +6,7 @@ const quickLinks = [
   { name: 'UPSC', url: 'https://www.upsc.gov.in/' },
   { name: 'RRB', url: 'https://www.rrbchennai.gov.in/' },
   { name: 'SSC', url: 'https://ssc.nic.in/' },
+  { name: 'TNUSRB', url: 'https://www.tnusrb.tn.gov.in/' },
 ];
 
 export const Footer = () => {
@@ -30,23 +31,25 @@ export const Footer = () => {
             </Link>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links - List Style */}
           <div className="text-center md:text-right">
             <h4 className="font-bold text-lg mb-3 text-secondary">Quick Links</h4>
-            <div className="flex gap-4 flex-wrap justify-center md:justify-end">
+            <ul className="space-y-2">
               {quickLinks.map((link) => (
-                <a 
-                  key={link.name}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1 text-primary-foreground/90 hover:text-secondary transition-colors"
-                >
-                  {link.name}
-                  <ExternalLink className="h-3 w-3" />
-                </a>
+                <li key={link.name}>
+                  <a 
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-primary-foreground/90 hover:text-secondary transition-colors justify-center md:justify-end"
+                  >
+                    <span>•</span>
+                    {link.name}
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
 
