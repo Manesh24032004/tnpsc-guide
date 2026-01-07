@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Footer } from '@/components/Layout/Footer';
@@ -8,7 +9,14 @@ import {
   CarouselNext, 
   CarouselPrevious 
 } from '@/components/ui/carousel';
-import { LogIn, UserPlus, Bot, BookOpen, FileText, GraduationCap, Brain, BookMarked, Users, Sparkles, MapPin, Award, FileCheck } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+} from '@/components/ui/dialog';
+import { LogIn, UserPlus, Bot, BookOpen, FileText, GraduationCap, Brain, BookMarked, Users, Sparkles, MapPin, Award, FileCheck, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Autoplay from 'embla-carousel-autoplay';
 
@@ -90,6 +98,9 @@ const selectionProcess = [
 ];
 
 export const Landing = () => {
+  const [selectedExam, setSelectedExam] = useState<typeof examGroups[0] | null>(null);
+  const [selectedEligibility, setSelectedEligibility] = useState<typeof eligibilityCriteria[0] | null>(null);
+  const [selectedProcess, setSelectedProcess] = useState<typeof selectionProcess[0] | null>(null);
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Simple Header */}
@@ -113,9 +124,8 @@ export const Landing = () => {
             </Button>
             <Button 
               asChild
-              variant="outline"
               size="sm"
-              className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary font-semibold"
+              className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold"
             >
               <Link to="/auth?register=true" className="flex items-center gap-2">
                 <UserPlus className="h-4 w-4" />
@@ -126,11 +136,11 @@ export const Landing = () => {
         </div>
       </header>
 
-      {/* Gap between header and marquee */}
-      <div className="h-8 bg-background"></div>
+      {/* Gap between header and marquee - 20% */}
+      <div className="h-[20vh] bg-background"></div>
       
-      {/* Text Marquee Slider */}
-      <div className="bg-gradient-primary overflow-hidden py-3">
+      {/* Text Marquee Slider - Reduced height */}
+      <div className="bg-gradient-primary overflow-hidden py-2">
         <div className="animate-marquee whitespace-nowrap flex items-center">
           {[...marqueeTexts, ...marqueeTexts].map((text, index) => (
             <span 
@@ -354,24 +364,48 @@ export const Landing = () => {
                 <GraduationCap className="h-6 w-6 text-primary" />
                 <h3 className="text-2xl font-bold text-primary">Types of Exams</h3>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
                 {examGroups.map((group, index) => (
-                  <div key={index} className="p-4 bg-muted rounded-lg hover:bg-primary/10 transition-colors">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="px-2 py-1 bg-primary text-primary-foreground text-xs font-bold rounded">
-                        {group.code}
-                      </span>
-                      <h4 className="font-semibold text-foreground text-sm">{group.name}</h4>
-                    </div>
-                    <ul className="text-xs text-muted-foreground space-y-1">
-                      {group.posts.map((post, idx) => (
-                        <li key={idx}>• {post}</li>
-                      ))}
-                    </ul>
-                  </div>
+                  <button
+                    key={index}
+                    onClick={() => setSelectedExam(group)}
+                    className="p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-pointer group"
+                  >
+                    <span className="px-2 py-1 bg-primary text-primary-foreground group-hover:bg-primary-foreground group-hover:text-primary text-sm font-bold rounded block text-center">
+                      {group.code}
+                    </span>
+                    <p className="text-xs mt-2 text-center font-medium">{group.name}</p>
+                  </button>
                 ))}
               </div>
             </Card>
+
+            {/* Exam Details Popup */}
+            <Dialog open={!!selectedExam} onOpenChange={() => setSelectedExam(null)}>
+              <DialogContent className="max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="flex items-center gap-2">
+                    <span className="px-3 py-1 bg-primary text-primary-foreground font-bold rounded">
+                      {selectedExam?.code}
+                    </span>
+                    {selectedExam?.name}
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-foreground">Types of Posts:</h4>
+                  <ul className="space-y-2">
+                    {selectedExam?.posts.map((post, idx) => (
+                      <li key={idx} className="flex items-center gap-2 p-2 bg-muted rounded">
+                        <span className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                          {idx + 1}
+                        </span>
+                        {post}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </DialogContent>
+            </Dialog>
 
             {/* Eligibility Criteria */}
             <Card className="p-6">
@@ -379,27 +413,15 @@ export const Landing = () => {
                 <Users className="h-6 w-6 text-primary" />
                 <h3 className="text-2xl font-bold text-primary">Eligibility Criteria</h3>
               </div>
-              <div className="space-y-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                 {eligibilityCriteria.map((criteria, index) => (
-                  <div key={index} className="p-4 bg-muted rounded-lg">
-                    <h4 className="font-bold text-foreground mb-3 text-lg border-b border-accent/30 pb-2">
-                      {criteria.group}
-                    </h4>
-                    <div className="grid md:grid-cols-3 gap-4 text-sm">
-                      <div>
-                        <span className="font-semibold text-primary">Age Limit:</span>
-                        <p className="text-muted-foreground">{criteria.age}</p>
-                      </div>
-                      <div>
-                        <span className="font-semibold text-primary">Education:</span>
-                        <p className="text-muted-foreground">{criteria.education}</p>
-                      </div>
-                      <div>
-                        <span className="font-semibold text-primary">Age Relaxation:</span>
-                        <p className="text-muted-foreground">{criteria.relaxation}</p>
-                      </div>
-                    </div>
-                  </div>
+                  <button
+                    key={index}
+                    onClick={() => setSelectedEligibility(criteria)}
+                    className="p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-pointer"
+                  >
+                    <span className="font-bold text-lg">{criteria.group}</span>
+                  </button>
                 ))}
               </div>
               <div className="mt-4 p-4 bg-primary/10 rounded-lg">
@@ -412,33 +434,76 @@ export const Landing = () => {
               </div>
             </Card>
 
+            {/* Eligibility Popup */}
+            <Dialog open={!!selectedEligibility} onOpenChange={() => setSelectedEligibility(null)}>
+              <DialogContent className="max-w-md">
+                <DialogHeader>
+                  <DialogTitle>{selectedEligibility?.group} - Eligibility</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <div className="p-3 bg-muted rounded-lg">
+                    <span className="font-semibold text-primary">Age Limit:</span>
+                    <p className="text-foreground text-lg">{selectedEligibility?.age}</p>
+                  </div>
+                  <div className="p-3 bg-muted rounded-lg">
+                    <span className="font-semibold text-primary">Education:</span>
+                    <p className="text-foreground text-lg">{selectedEligibility?.education}</p>
+                  </div>
+                  <div className="p-3 bg-muted rounded-lg">
+                    <span className="font-semibold text-primary">Age Relaxation:</span>
+                    <p className="text-foreground text-lg">{selectedEligibility?.relaxation}</p>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+
             {/* Selection Process */}
             <Card className="p-6">
               <div className="flex items-center gap-3 mb-4">
                 <FileCheck className="h-6 w-6 text-primary" />
                 <h3 className="text-2xl font-bold text-primary">Selection Process</h3>
               </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                 {selectionProcess.map((process, index) => (
-                  <div key={index} className="p-4 bg-muted rounded-lg">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Award className="h-5 w-5 text-primary" />
-                      <h4 className="font-bold text-foreground">{process.group}</h4>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      {process.stages.map((stage, idx) => (
-                        <span key={idx} className="px-2 py-1 bg-primary/20 text-primary text-xs rounded-full">
-                          {idx + 1}. {stage}
-                        </span>
-                      ))}
-                    </div>
-                    <p className="text-xs text-primary bg-primary/10 p-2 rounded">
-                      ⓘ {process.note}
-                    </p>
-                  </div>
+                  <button
+                    key={index}
+                    onClick={() => setSelectedProcess(process)}
+                    className="p-4 bg-muted rounded-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-pointer"
+                  >
+                    <Award className="h-5 w-5 mx-auto mb-2" />
+                    <span className="font-bold">{process.group}</span>
+                  </button>
                 ))}
               </div>
             </Card>
+
+            {/* Selection Process Popup */}
+            <Dialog open={!!selectedProcess} onOpenChange={() => setSelectedProcess(null)}>
+              <DialogContent className="max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="flex items-center gap-2">
+                    <Award className="h-5 w-5 text-primary" />
+                    {selectedProcess?.group} - Selection Process
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-foreground">Stages:</h4>
+                  <div className="space-y-2">
+                    {selectedProcess?.stages.map((stage, idx) => (
+                      <div key={idx} className="flex items-center gap-3 p-3 bg-muted rounded-lg">
+                        <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold">
+                          {idx + 1}
+                        </span>
+                        <span className="font-medium">{stage}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="p-3 bg-primary/10 rounded-lg">
+                    <p className="text-sm text-primary">ⓘ {selectedProcess?.note}</p>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </section>
       </main>
