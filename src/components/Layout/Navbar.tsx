@@ -136,8 +136,45 @@ export const Navbar = () => {
             <span className="text-2xl font-bold hidden sm:inline">TNPSC Wizard</span>
           </Link>
 
-          {/* Search Bar - Desktop */}
-          <div ref={searchRef} className="hidden md:flex items-center flex-1 max-w-md mx-4 relative">
+          {/* Menu Button - Left Side */}
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/10 hidden md:flex">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-80">
+              <SheetHeader>
+                <SheetTitle className="flex items-center gap-2">
+                  <GraduationCap className="h-6 w-6 text-primary" />
+                  Menu
+                </SheetTitle>
+              </SheetHeader>
+              <div className="mt-6 space-y-2">
+                {menuItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      onClick={() => setIsOpen(false)}
+                      className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
+                        item.highlight 
+                          ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
+                          : 'hover:bg-accent'
+                      }`}
+                    >
+                      <Icon className="h-5 w-5" />
+                      <span className="font-medium">{item.name}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </SheetContent>
+          </Sheet>
+
+          {/* Search Bar - Desktop - 70% width */}
+          <div ref={searchRef} className="hidden md:flex items-center w-[70%] max-w-xl mx-4 relative">
             <form onSubmit={handleSearch} className="w-full">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -243,42 +280,6 @@ export const Navbar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Menu Button */}
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/10">
-                  <Menu className="h-6 w-6" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-80">
-                <SheetHeader>
-                  <SheetTitle className="flex items-center gap-2">
-                    <GraduationCap className="h-6 w-6 text-primary" />
-                    Menu
-                  </SheetTitle>
-                </SheetHeader>
-                <div className="mt-6 space-y-2">
-                  {menuItems.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <Link
-                        key={item.name}
-                        to={item.href}
-                        onClick={() => setIsOpen(false)}
-                        className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
-                          item.highlight 
-                            ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
-                            : 'hover:bg-accent'
-                        }`}
-                      >
-                        <Icon className="h-5 w-5" />
-                        <span className="font-medium">{item.name}</span>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </SheetContent>
-            </Sheet>
           </div>
 
           {/* Mobile Actions */}
@@ -327,27 +328,13 @@ export const Navbar = () => {
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-80">
+              <SheetContent side="left" className="w-80">
                 <SheetHeader>
                   <SheetTitle className="flex items-center gap-2">
                     <GraduationCap className="h-6 w-6 text-primary" />
                     Menu
                   </SheetTitle>
                 </SheetHeader>
-                
-                {/* Mobile Search */}
-                <form onSubmit={handleSearch} className="mt-4">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      type="text"
-                      placeholder="Search..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                </form>
 
                 <div className="mt-6 space-y-2">
                   {menuItems.map((item) => {

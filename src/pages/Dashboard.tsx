@@ -113,15 +113,15 @@ const Dashboard = () => {
               return (
                 <Link key={feature.title} to={feature.href}>
                   <Card 
-                    className="p-4 hover:shadow-elegant hover:scale-105 transition-all duration-300 border-2 border-accent/30 hover:border-primary cursor-pointer h-full"
+                    className="p-4 hover:shadow-glow hover:scale-105 transition-all duration-300 border-2 border-accent/30 hover:border-primary hover:bg-primary hover:text-primary-foreground cursor-pointer h-full group"
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
                     <div className="text-center">
-                      <div className="w-14 h-14 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-3 shadow-soft">
-                        <Icon className="h-7 w-7 text-primary-foreground" />
+                      <div className="w-14 h-14 bg-gradient-primary group-hover:bg-secondary rounded-full flex items-center justify-center mx-auto mb-3 shadow-soft transition-all duration-300">
+                        <Icon className="h-7 w-7 text-primary-foreground group-hover:text-secondary-foreground" />
                       </div>
-                      <h3 className="font-bold text-foreground mb-1">{feature.title}</h3>
-                      <p className="text-xs text-muted-foreground">{feature.description}</p>
+                      <h3 className="font-bold text-foreground group-hover:text-primary-foreground mb-1 transition-colors">{feature.title}</h3>
+                      <p className="text-xs text-muted-foreground group-hover:text-primary-foreground/80 transition-colors">{feature.description}</p>
                     </div>
                   </Card>
                 </Link>
