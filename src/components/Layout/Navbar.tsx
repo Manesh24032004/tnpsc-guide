@@ -15,7 +15,9 @@ import {
   Bot,
   Users,
   BookMarked,
-  LogOut
+  LogOut,
+  ZoomIn,
+  ZoomOut
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { useAuth } from '@/hooks/useAuth';
@@ -67,6 +69,7 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(100);
   const [notifications, setNotifications] = useState([
     { id: 1, message: 'Welcome to TNPSC Wizard!', read: false },
     { id: 2, message: 'New syllabus updated!', read: false },
@@ -79,6 +82,19 @@ export const Navbar = () => {
 
   const markAllRead = () => {
     setNotifications(notifications.map(n => ({ ...n, read: true })));
+  };
+
+  // Zoom functions
+  const handleZoomIn = () => {
+    const newZoom = Math.min(zoomLevel + 10, 150);
+    setZoomLevel(newZoom);
+    document.body.style.zoom = `${newZoom}%`;
+  };
+
+  const handleZoomOut = () => {
+    const newZoom = Math.max(zoomLevel - 10, 70);
+    setZoomLevel(newZoom);
+    document.body.style.zoom = `${newZoom}%`;
   };
 
   // Close suggestions when clicking outside
@@ -128,25 +144,25 @@ export const Navbar = () => {
 
   return (
     <nav className="bg-gradient-primary text-primary-foreground sticky top-0 z-50 shadow-elegant">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
+      <div className="container mx-auto px-2 md:px-4">
+        <div className="flex items-center justify-between h-16 md:h-20 lg:h-24">
           {/* Logo */}
-          <Link to="/home" className="flex items-center gap-2">
-            <GraduationCap className="h-8 w-8" />
-            <span className="text-xl font-bold whitespace-nowrap">TNPSC Wizard</span>
+          <Link to="/home" className="flex items-center gap-1 md:gap-2 flex-shrink-0">
+            <GraduationCap className="h-6 w-6 md:h-8 md:w-8" />
+            <span className="text-base md:text-xl font-bold whitespace-nowrap">TNPSC Wizard</span>
           </Link>
 
           {/* Menu Button - Left Side */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/10 hidden md:flex">
-                <Menu className="h-6 w-6" />
+                <Menu className="h-5 w-5 md:h-6 md:w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-80">
+            <SheetContent side="left" className="w-72 md:w-80">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2">
-                  <GraduationCap className="h-6 w-6 text-primary" />
+                  <GraduationCap className="h-5 w-5 md:h-6 md:w-6 text-primary" />
                   Menu
                 </SheetTitle>
               </SheetHeader>
@@ -173,21 +189,21 @@ export const Navbar = () => {
             </SheetContent>
           </Sheet>
 
-          {/* Search Bar - Desktop - 40% width */}
-          <div ref={searchRef} className="hidden md:flex items-center w-[40%] max-w-md mx-4 relative">
+          {/* Search Bar - Desktop - Reduced to 24% width (60% of 40%) */}
+          <div ref={searchRef} className="hidden md:flex items-center w-[24%] max-w-xs mx-2 lg:mx-4 relative">
             <form onSubmit={handleSearch} className="w-full">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-2 md:left-3 top-1/2 -translate-y-1/2 h-3 w-3 md:h-4 md:w-4 text-muted-foreground" />
                 <Input
                   type="text"
-                  placeholder="Search syllabus, books, quiz..."
+                  placeholder="Search..."
                   value={searchQuery}
                   onChange={(e) => {
                     setSearchQuery(e.target.value);
                     setShowSuggestions(true);
                   }}
                   onFocus={() => setShowSuggestions(true)}
-                  className="pl-10 h-10 bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60"
+                  className="pl-7 md:pl-10 h-8 md:h-10 text-xs md:text-sm bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60"
                 />
               </div>
             </form>
@@ -199,14 +215,37 @@ export const Navbar = () => {
                   <button
                     key={item.href}
                     onClick={() => handleSuggestionClick(item.href)}
-                    className="w-full flex items-center gap-2 px-4 py-3 hover:bg-muted transition-colors text-left text-foreground"
+                    className="w-full flex items-center gap-2 px-3 md:px-4 py-2 md:py-3 hover:bg-muted transition-colors text-left text-foreground"
                   >
-                    <Search className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm font-medium">{item.label}</span>
+                    <Search className="h-3 w-3 md:h-4 md:w-4 text-muted-foreground" />
+                    <span className="text-xs md:text-sm font-medium">{item.label}</span>
                   </button>
                 ))}
               </div>
             )}
+          </div>
+
+          {/* Zoom Controls - Desktop */}
+          <div className="hidden md:flex items-center gap-1 border border-primary-foreground/30 rounded-lg p-1">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleZoomOut}
+              className="h-7 w-7 md:h-8 md:w-8 text-primary-foreground hover:bg-primary-foreground/10"
+              title="Zoom Out"
+            >
+              <ZoomOut className="h-3 w-3 md:h-4 md:w-4" />
+            </Button>
+            <span className="text-xs font-medium min-w-[3rem] text-center">{zoomLevel}%</span>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleZoomIn}
+              className="h-7 w-7 md:h-8 md:w-8 text-primary-foreground hover:bg-primary-foreground/10"
+              title="Zoom In"
+            >
+              <ZoomIn className="h-3 w-3 md:h-4 md:w-4" />
+            </Button>
           </div>
 
           {/* Right Side - Desktop */}

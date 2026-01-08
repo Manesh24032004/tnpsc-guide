@@ -92,32 +92,32 @@ const selectionProcess = [
 export const Landing = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Simple Header - Increased height by 20% */}
-      <header className="bg-gradient-primary text-primary-foreground py-5 px-4">
+      {/* Header - Increased height by 20% */}
+      <header className="bg-gradient-primary text-primary-foreground py-4 md:py-6 px-4">
         <div className="container mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <GraduationCap className="h-8 w-8" />
-            <h1 className="text-xl md:text-2xl font-bold whitespace-nowrap">TNPSC Wizard</h1>
+          <div className="flex items-center gap-2 md:gap-3">
+            <GraduationCap className="h-6 w-6 md:h-8 md:w-8" />
+            <h1 className="text-lg sm:text-xl md:text-2xl font-bold whitespace-nowrap">TNPSC Wizard</h1>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-2 md:gap-3">
             <Button 
               asChild
               variant="secondary"
               size="sm"
-              className="font-semibold"
+              className="font-semibold text-xs md:text-sm"
             >
-              <Link to="/auth" className="flex items-center gap-2">
-                <LogIn className="h-4 w-4" />
+              <Link to="/auth" className="flex items-center gap-1 md:gap-2">
+                <LogIn className="h-3 w-3 md:h-4 md:w-4" />
                 <span className="hidden sm:inline">Login</span>
               </Link>
             </Button>
             <Button 
               asChild
               size="sm"
-              className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold"
+              className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold text-xs md:text-sm"
             >
-              <Link to="/auth?register=true" className="flex items-center gap-2">
-                <UserPlus className="h-4 w-4" />
+              <Link to="/auth?register=true" className="flex items-center gap-1 md:gap-2">
+                <UserPlus className="h-3 w-3 md:h-4 md:w-4" />
                 <span className="hidden sm:inline">Register</span>
               </Link>
             </Button>
@@ -125,18 +125,18 @@ export const Landing = () => {
         </div>
       </header>
 
-      {/* Gap between header and marquee - reduced 20% padding */}
-      <div className="h-[16vh] bg-background"></div>
+      {/* Reduced gap between header and marquee */}
+      <div className="h-2 md:h-4 bg-background"></div>
       
-      {/* Text Marquee Slider - Reduced height */}
-      <div className="bg-gradient-primary overflow-hidden py-1.5">
+      {/* Text Marquee Slider - Reduced height and responsive */}
+      <div className="bg-gradient-primary overflow-hidden py-1 md:py-1.5">
         <div className="animate-marquee whitespace-nowrap flex items-center">
           {[...marqueeTexts, ...marqueeTexts].map((text, index) => (
             <span 
               key={index} 
-              className="mx-8 text-primary-foreground font-bold text-lg md:text-xl"
+              className="mx-4 md:mx-8 text-primary-foreground font-bold text-sm md:text-lg lg:text-xl"
             >
-              {text} <span className="mx-4">✦</span>
+              {text} <span className="mx-2 md:mx-4">✦</span>
             </span>
           ))}
         </div>
@@ -144,8 +144,8 @@ export const Landing = () => {
 
       <main className="flex-1">
         {/* Main Content Section - TNPSC Building + Carousel */}
-        <section className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <section className="container mx-auto px-4 py-6 md:py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-center">
             {/* Left Side - TNPSC Building Image */}
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-primary rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
@@ -153,13 +153,14 @@ export const Landing = () => {
                 <img 
                   src={tnpscBuilding} 
                   alt="TNPSC Building Chennai" 
-                  className="w-full h-[400px] md:h-[500px] object-cover rounded-2xl shadow-elegant"
+                  className="w-full h-[250px] sm:h-[350px] md:h-[400px] lg:h-[500px] object-cover rounded-2xl shadow-elegant"
+                  loading="lazy"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-foreground/80 to-transparent p-6 rounded-b-2xl">
-                  <h2 className="text-primary-foreground text-2xl md:text-3xl font-bold">
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-foreground/80 to-transparent p-4 md:p-6 rounded-b-2xl">
+                  <h2 className="text-primary-foreground text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold">
                     Tamil Nadu Public Service Commission
                   </h2>
-                  <p className="text-primary-foreground/90 mt-2">
+                  <p className="text-primary-foreground/90 mt-1 md:mt-2 text-sm md:text-base">
                     TNPSC Office, Chennai
                   </p>
                 </div>
@@ -167,18 +168,18 @@ export const Landing = () => {
             </div>
 
             {/* Right Side - Image Carousel */}
-            <div className="space-y-6">
-              <div className="text-center mb-6">
-                <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
+            <div className="space-y-4 md:space-y-6">
+              <div className="text-center mb-4 md:mb-6">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">
                   Welcome to <span className="text-primary">TNPSC Wizard</span>
                 </h1>
-                <p className="text-muted-foreground text-lg">
+                <p className="text-muted-foreground text-base md:text-lg">
                   Your complete guide to government job success
                 </p>
               </div>
 
               <Carousel 
-                className="w-full max-w-lg mx-auto"
+                className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto"
                 plugins={[
                   Autoplay({
                     delay: 3000,
@@ -195,37 +196,38 @@ export const Landing = () => {
                         <img 
                           src={image.src} 
                           alt={image.alt}
-                          className="w-full h-[280px] md:h-[350px] object-cover"
+                          className="w-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] object-cover"
+                          loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent"></div>
                       </div>
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="left-2" />
-                <CarouselNext className="right-2" />
+                <CarouselPrevious className="left-1 md:left-2 h-8 w-8 md:h-10 md:w-10" />
+                <CarouselNext className="right-1 md:right-2 h-8 w-8 md:h-10 md:w-10" />
               </Carousel>
 
               {/* Login/Register Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center mt-6 md:mt-8">
                 <Button 
                   asChild
-                  size="lg"
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-elegant"
+                  size="default"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-elegant text-sm md:text-base px-4 md:px-6"
                 >
                   <Link to="/auth" className="flex items-center gap-2">
-                    <LogIn className="h-5 w-5" />
+                    <LogIn className="h-4 w-4 md:h-5 md:w-5" />
                     Login to Continue
                   </Link>
                 </Button>
                 <Button 
                   asChild
-                  size="lg"
+                  size="default"
                   variant="outline"
-                  className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold"
+                  className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold text-sm md:text-base px-4 md:px-6"
                 >
                   <Link to="/auth?register=true" className="flex items-center gap-2">
-                    <UserPlus className="h-5 w-5" />
+                    <UserPlus className="h-4 w-4 md:h-5 md:w-5" />
                     Register Now
                   </Link>
                 </Button>
