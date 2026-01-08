@@ -17,7 +17,8 @@ import {
   BookMarked,
   LogOut,
   ZoomIn,
-  ZoomOut
+  ZoomOut,
+  Bookmark
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { useAuth } from '@/hooks/useAuth';
@@ -74,6 +75,11 @@ export const Navbar = () => {
     { id: 1, message: 'Welcome to TNPSC Wizard!', read: false },
     { id: 2, message: 'New syllabus updated!', read: false },
   ]);
+  const [bookmarks, setBookmarks] = useState<{id: number, text: string, createdAt: Date}[]>(() => {
+    const saved = localStorage.getItem('tnpsc-bookmarks');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [newBookmark, setNewBookmark] = useState('');
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
@@ -82,6 +88,30 @@ export const Navbar = () => {
 
   const markAllRead = () => {
     setNotifications(notifications.map(n => ({ ...n, read: true })));
+  };
+
+  // Bookmark functions
+  const addBookmark = () => {
+    if (!newBookmark.trim()) return;
+    const bookmark = {
+      id: Date.now(),
+      text: newBookmark.trim(),
+      createdAt: new Date()
+    };
+    const updated = [...bookmarks, bookmark];
+    setBookmarks(updated);
+    localStorage.setItem('tnpsc-bookmarks', JSON.stringify(updated));
+    setNewBookmark('');
+    toast({
+      title: "Bookmark added",
+      description: "Your note has been saved.",
+    });
+  };
+
+  const removeBookmark = (id: number) => {
+    const updated = bookmarks.filter(b => b.id !== id);
+    setBookmarks(updated);
+    localStorage.setItem('tnpsc-bookmarks', JSON.stringify(updated));
   };
 
   // Zoom functions
@@ -286,6 +316,116 @@ export const Navbar = () => {
                   ) : (
                     <div className="p-4 text-center text-muted-foreground text-sm">
                       No notifications
+                    </div>
+                  )}
+                </div>
+              </PopoverContent>
+            </Popover>
+
+            {/* Bookmarks */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative text-primary-foreground hover:bg-primary-foreground/10">
+                  <Bookmark className="h-5 w-5" />
+                  {bookmarks.length > 0 && (
+                    <span className="absolute -top-1 -right-1 h-4 w-4 bg-accent text-accent-foreground text-xs rounded-full flex items-center justify-center">
+                      {bookmarks.length}
+                    </span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align="end" className="w-80 p-0">
+                <div className="p-3 border-b border-border">
+                  <h4 className="font-semibold text-sm mb-2">My Bookmarks</h4>
+                  <div className="flex gap-2">
+                    <Input
+                      value={newBookmark}
+                      onChange={(e) => setNewBookmark(e.target.value)}
+                      placeholder="Save a hint or query..."
+                      className="h-8 text-sm"
+                      onKeyDown={(e) => e.key === 'Enter' && addBookmark()}
+                    />
+                    <Button size="sm" onClick={addBookmark} className="h-8">
+                      Add
+                    </Button>
+                  </div>
+                </div>
+                <div className="max-h-64 overflow-y-auto">
+                  {bookmarks.length > 0 ? (
+                    bookmarks.map((bookmark) => (
+                      <div
+                        key={bookmark.id}
+                        className="p-3 border-b border-border last:border-0 flex items-start justify-between gap-2"
+                      >
+                        <p className="text-sm flex-1">{bookmark.text}</p>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-6 w-6 text-destructive hover:text-destructive"
+                          onClick={() => removeBookmark(bookmark.id)}
+                        >
+                          ×
+                        </Button>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-4 text-center text-muted-foreground text-sm">
+                      No bookmarks yet. Save your hints and queries here!
+                    </div>
+                  )}
+                </div>
+              </PopoverContent>
+            </Popover>
+
+            {/* Bookmarks - Mobile */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative text-primary-foreground">
+                  <Bookmark className="h-5 w-5" />
+                  {bookmarks.length > 0 && (
+                    <span className="absolute -top-1 -right-1 h-4 w-4 bg-accent text-accent-foreground text-xs rounded-full flex items-center justify-center">
+                      {bookmarks.length}
+                    </span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align="end" className="w-72 p-0">
+                <div className="p-3 border-b border-border">
+                  <h4 className="font-semibold text-sm mb-2">My Bookmarks</h4>
+                  <div className="flex gap-2">
+                    <Input
+                      value={newBookmark}
+                      onChange={(e) => setNewBookmark(e.target.value)}
+                      placeholder="Save a hint..."
+                      className="h-8 text-sm"
+                      onKeyDown={(e) => e.key === 'Enter' && addBookmark()}
+                    />
+                    <Button size="sm" onClick={addBookmark} className="h-8">
+                      Add
+                    </Button>
+                  </div>
+                </div>
+                <div className="max-h-48 overflow-y-auto">
+                  {bookmarks.length > 0 ? (
+                    bookmarks.map((bookmark) => (
+                      <div
+                        key={bookmark.id}
+                        className="p-3 border-b border-border last:border-0 flex items-start justify-between gap-2"
+                      >
+                        <p className="text-sm flex-1">{bookmark.text}</p>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-6 w-6 text-destructive hover:text-destructive"
+                          onClick={() => removeBookmark(bookmark.id)}
+                        >
+                          ×
+                        </Button>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-4 text-center text-muted-foreground text-sm">
+                      No bookmarks yet
                     </div>
                   )}
                 </div>

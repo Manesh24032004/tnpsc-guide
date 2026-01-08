@@ -23,6 +23,7 @@ import Tirukural from "./pages/Tirukural";
 import Notes from "./pages/Notes";
 import Poets from "./pages/Poets";
 import Admin from "./pages/Admin";
+import AdminLogin from "./pages/AdminLogin";
 import NotFound from "./pages/NotFound";
 import Quiz from "./pages/Quiz";
 import QuizTamil from "./pages/QuizTamil";
@@ -49,6 +50,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Landing />} />
                 <Route path="/auth" element={<Auth />} />
+                <Route path="/admin-login" element={<AdminLogin />} />
                 <Route path="/home" element={<ProtectedRoute requireAdmin={false}><Dashboard /></ProtectedRoute>} />
                 <Route path="/syllabus" element={<ProtectedRoute requireAdmin={false}><Syllabus /></ProtectedRoute>} />
                 <Route path="/syllabus/g1" element={<ProtectedRoute requireAdmin={false}><SyllabusG1 /></ProtectedRoute>} />
@@ -62,7 +64,7 @@ function App() {
                 <Route path="/tirukural" element={<ProtectedRoute requireAdmin={false}><Tirukural /></ProtectedRoute>} />
                 <Route path="/notes" element={<ProtectedRoute requireAdmin={false}><Notes /></ProtectedRoute>} />
                 <Route path="/poets" element={<ProtectedRoute requireAdmin={false}><Poets /></ProtectedRoute>} />
-                <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+                <Route path="/admin" element={<ProtectedRoute requireAdmin={true}><Admin /></ProtectedRoute>} />
                 <Route path="/quiz" element={<ProtectedRoute requireAdmin={false}><Quiz /></ProtectedRoute>} />
                 <Route path="/quiz/tamil" element={<ProtectedRoute requireAdmin={false}><QuizTamil /></ProtectedRoute>} />
                 <Route path="/quiz/gs" element={<ProtectedRoute requireAdmin={false}><QuizGS /></ProtectedRoute>} />

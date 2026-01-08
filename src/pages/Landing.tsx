@@ -479,6 +479,60 @@ export const Landing = () => {
                 ))}
               </div>
             </Card>
+
+            {/* FAQ Section */}
+            <Card className="p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <FileText className="h-6 w-6 text-primary" />
+                <h3 className="text-2xl font-bold text-primary">Frequently Asked Questions</h3>
+              </div>
+              <div className="space-y-4">
+                {[
+                  {
+                    question: 'What is TNPSC?',
+                    answer: 'TNPSC (Tamil Nadu Public Service Commission) is a constitutional body that conducts examinations for recruitment to various civil services positions in Tamil Nadu state government.'
+                  },
+                  {
+                    question: 'How can I apply for TNPSC exams?',
+                    answer: 'You can apply online through the official TNPSC website (www.tnpsc.gov.in). Registration requires a valid email ID, mobile number, and scanned copies of required documents.'
+                  },
+                  {
+                    question: 'What is the age limit for TNPSC exams?',
+                    answer: 'Age limits vary by exam: Group 1 (21-32 years), Group 2/2A (18-30 years), Group 4 (18-30 years). Relaxations are available for SC/ST/BC candidates (5 years).'
+                  },
+                  {
+                    question: 'What is the syllabus for TNPSC exams?',
+                    answer: 'The syllabus includes General Studies (History, Geography, Polity, Economy), Aptitude & Mental Ability, Current Affairs, and Tamil Language. Detailed syllabus varies by group.'
+                  },
+                  {
+                    question: 'Is there negative marking in TNPSC?',
+                    answer: 'Yes, there is negative marking of 1/3rd (0.33) marks for each wrong answer in most TNPSC exams. It\'s important to attempt questions carefully.'
+                  },
+                  {
+                    question: 'How many attempts are allowed for TNPSC?',
+                    answer: 'There is no limit on the number of attempts for TNPSC exams as long as you meet the age criteria and eligibility requirements.'
+                  },
+                  {
+                    question: 'What are the different groups in TNPSC?',
+                    answer: 'TNPSC conducts exams for Group 1 (highest - Deputy Collector, DSP), Group 2 (ASO, Sub-Registrar), Group 2A, Group 3, Group 4 (Junior Assistant, VAO), and specialized services.'
+                  },
+                  {
+                    question: 'Can I write TNPSC exam in Tamil?',
+                    answer: 'Yes, TNPSC exams can be written in Tamil or English. Most candidates prefer Tamil medium as it covers Tamil Nadu-specific subjects.'
+                  }
+                ].map((faq, index) => (
+                  <div key={index} className="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                    <h4 className="font-semibold text-foreground mb-2 flex items-start gap-2">
+                      <span className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm flex-shrink-0">
+                        {index + 1}
+                      </span>
+                      {faq.question}
+                    </h4>
+                    <p className="text-sm text-muted-foreground ml-8">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </Card>
           </div>
         </section>
       </main>
