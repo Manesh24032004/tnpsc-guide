@@ -12,9 +12,9 @@ const quickLinks = [
 export const Footer = () => {
   return (
     <footer className="bg-gradient-primary text-primary-foreground border-t-4 border-secondary mt-8">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          {/* Brand Section */}
+      <div className="container mx-auto px-6 md:px-12 lg:px-16 py-8">
+        <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+          {/* Brand Section - Left */}
           <div className="text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
               <GraduationCap className="h-6 w-6" />
@@ -31,7 +31,7 @@ export const Footer = () => {
             </Link>
           </div>
 
-          {/* Quick Links - List Style */}
+          {/* Quick Links - Right Side Aligned */}
           <div className="text-center md:text-right">
             <h4 className="font-bold text-lg mb-3 text-secondary">Quick Links</h4>
             <ul className="space-y-2">
