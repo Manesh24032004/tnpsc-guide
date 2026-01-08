@@ -6,9 +6,36 @@ export const BackButton = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Don't show on home/dashboard pages
-  const hideOnPaths = ['/', '/home', '/auth', '/admin-login'];
+  // Don't show on home/dashboard pages or pages with their own back buttons
+  const hideOnPaths = [
+    '/', 
+    '/home', 
+    '/auth', 
+    '/admin-login',
+    '/admin',
+    '/syllabus/g1',
+    '/syllabus/g2',
+    '/syllabus/g4',
+    '/previous-papers',
+    '/books/standards',
+    '/quiz',
+    '/notes',
+    '/poets',
+    '/ai-chat',
+  ];
+  
+  // Also hide on dynamic routes that have their own navigation
+  const hideOnPatterns = [
+    /^\/previous-papers\/.+$/,
+    /^\/books\/standards\/.+$/,
+    /^\/quiz\/.+$/,
+  ];
+
   if (hideOnPaths.includes(location.pathname)) {
+    return null;
+  }
+  
+  if (hideOnPatterns.some(pattern => pattern.test(location.pathname))) {
     return null;
   }
 
