@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -8,18 +8,31 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute = ({ children, requireAdmin = true }: ProtectedRouteProps) => {
-  const { user, loading, isAdmin } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check localStorage for admin login status
+    const adminStatus = localStorage.getItem('isAdminLoggedIn') === 'true';
+    setIsAdminLoggedIn(adminStatus);
+  }, []);
 
   useEffect(() => {
     if (!loading) {
-      if (!user) {
-        navigate('/auth');
-      } else if (requireAdmin && !isAdmin) {
-        navigate('/home');
+      if (requireAdmin) {
+        // For admin routes, check localStorage admin status
+        if (!isAdminLoggedIn) {
+          navigate('/admin-login');
+        }
+      } else {
+        // For user routes, check regular auth
+        if (!user) {
+          navigate('/auth');
+        }
       }
     }
-  }, [user, loading, isAdmin, requireAdmin, navigate]);
+  }, [user, loading, isAdminLoggedIn, requireAdmin, navigate]);
 
   if (loading) {
     return (
@@ -29,7 +42,11 @@ export const ProtectedRoute = ({ children, requireAdmin = true }: ProtectedRoute
     );
   }
 
-  if (!user || (requireAdmin && !isAdmin)) {
+  if (requireAdmin && !isAdminLoggedIn) {
+    return null;
+  }
+
+  if (!requireAdmin && !user) {
     return null;
   }
 
