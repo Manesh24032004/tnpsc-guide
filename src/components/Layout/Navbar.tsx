@@ -377,61 +377,6 @@ export const Navbar = () => {
               </PopoverContent>
             </Popover>
 
-            {/* Bookmarks - Mobile */}
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative text-primary-foreground">
-                  <Bookmark className="h-5 w-5" />
-                  {bookmarks.length > 0 && (
-                    <span className="absolute -top-1 -right-1 h-4 w-4 bg-accent text-accent-foreground text-xs rounded-full flex items-center justify-center">
-                      {bookmarks.length}
-                    </span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent align="end" className="w-72 p-0">
-                <div className="p-3 border-b border-border">
-                  <h4 className="font-semibold text-sm mb-2">My Bookmarks</h4>
-                  <div className="flex gap-2">
-                    <Input
-                      value={newBookmark}
-                      onChange={(e) => setNewBookmark(e.target.value)}
-                      placeholder="Save a hint..."
-                      className="h-8 text-sm"
-                      onKeyDown={(e) => e.key === 'Enter' && addBookmark()}
-                    />
-                    <Button size="sm" onClick={addBookmark} className="h-8">
-                      Add
-                    </Button>
-                  </div>
-                </div>
-                <div className="max-h-48 overflow-y-auto">
-                  {bookmarks.length > 0 ? (
-                    bookmarks.map((bookmark) => (
-                      <div
-                        key={bookmark.id}
-                        className="p-3 border-b border-border last:border-0 flex items-start justify-between gap-2"
-                      >
-                        <p className="text-sm flex-1">{bookmark.text}</p>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6 text-destructive hover:text-destructive"
-                          onClick={() => removeBookmark(bookmark.id)}
-                        >
-                          ×
-                        </Button>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="p-4 text-center text-muted-foreground text-sm">
-                      No bookmarks yet
-                    </div>
-                  )}
-                </div>
-              </PopoverContent>
-            </Popover>
-
             <ThemeToggle />
 
             {/* User Menu */}
