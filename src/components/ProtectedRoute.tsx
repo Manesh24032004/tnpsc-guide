@@ -1,4 +1,12 @@
-import { useEffect, useState } from 'react';
+/**
+ * Protected Route Component
+ * 
+ * This component uses server-side authentication via Supabase.
+ * Admin status is verified through the user_roles table with RLS policies.
+ * Never relies on localStorage or client-side storage for security checks.
+ */
+
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -7,33 +15,31 @@ interface ProtectedRouteProps {
   requireAdmin?: boolean;
 }
 
-export const ProtectedRoute = ({ children, requireAdmin = true }: ProtectedRouteProps) => {
-  const { user, loading } = useAuth();
+export const ProtectedRoute = ({ children, requireAdmin = false }: ProtectedRouteProps) => {
+  const { user, loading, isAdmin } = useAuth();
   const navigate = useNavigate();
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
-
-  useEffect(() => {
-    // Check localStorage for admin login status
-    const adminStatus = localStorage.getItem('isAdminLoggedIn') === 'true';
-    setIsAdminLoggedIn(adminStatus);
-  }, []);
 
   useEffect(() => {
     if (!loading) {
-      if (requireAdmin) {
-        // For admin routes, check localStorage admin status
-        if (!isAdminLoggedIn) {
+      // Check if user is authenticated
+      if (!user) {
+        // Redirect to appropriate login page
+        if (requireAdmin) {
           navigate('/admin-login');
-        }
-      } else {
-        // For user routes, check regular auth
-        if (!user) {
+        } else {
           navigate('/auth');
         }
+        return;
+      }
+
+      // For admin routes, verify admin role from database
+      if (requireAdmin && !isAdmin) {
+        navigate('/admin-login');
       }
     }
-  }, [user, loading, isAdminLoggedIn, requireAdmin, navigate]);
+  }, [user, loading, isAdmin, requireAdmin, navigate]);
 
+  // Show loading state while checking authentication
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-soft">
@@ -42,11 +48,13 @@ export const ProtectedRoute = ({ children, requireAdmin = true }: ProtectedRoute
     );
   }
 
-  if (requireAdmin && !isAdminLoggedIn) {
+  // Not authenticated
+  if (!user) {
     return null;
   }
 
-  if (!requireAdmin && !user) {
+  // For admin routes, user must have admin role
+  if (requireAdmin && !isAdmin) {
     return null;
   }
 
