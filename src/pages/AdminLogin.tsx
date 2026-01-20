@@ -1,3 +1,11 @@
+/**
+ * Admin Login Page
+ * 
+ * This admin login uses secure Supabase authentication.
+ * Admin privileges are determined by the user_roles table in the database.
+ * RLS policies ensure only admins can perform administrative actions.
+ */
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
@@ -5,53 +13,91 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
-import { Shield, User, Lock, Eye, EyeOff } from 'lucide-react';
-
-// Hardcoded admin credentials (frontend only - no database)
-const ADMIN_ID = 'admin';
-const ADMIN_PASSWORD = 'admin123';
+import { Shield, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useEffect } from 'react';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
+  const { signIn, user, isAdmin, loading } = useAuth();
   
-  // Form state for admin ID and password
-  const [form, setForm] = useState({ adminId: '', password: '' });
+  // Form state for email and password
+  const [form, setForm] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  // Handle login form submission
-  const handleLogin = (e: React.FormEvent) => {
+  // Redirect if already logged in as admin
+  useEffect(() => {
+    if (!loading && user && isAdmin) {
+      navigate('/admin');
+    }
+  }, [user, isAdmin, loading, navigate]);
+
+  // Handle login form submission using Supabase authentication
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setIsSubmitting(true);
 
-    // Validate credentials against hardcoded values
-    if (form.adminId === ADMIN_ID && form.password === ADMIN_PASSWORD) {
-      // Success: Store admin session in localStorage
-      localStorage.setItem('isAdminLoggedIn', 'true');
+    try {
+      // Authenticate with Supabase
+      const { error: signInError } = await signIn(form.email, form.password);
       
+      if (signInError) {
+        setIsSubmitting(false);
+        setError('Invalid email or password. Please try again.');
+        toast({
+          title: "Login Failed",
+          description: signInError.message || "Invalid credentials",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Wait a moment for the auth state to update and check admin role
       toast({
-        title: "Login Successful!",
-        description: "Welcome, Admin! Redirecting to dashboard...",
+        title: "Checking admin privileges...",
+        description: "Please wait while we verify your access.",
       });
 
-      // Redirect to admin dashboard after short delay
+      // The useAuth hook will automatically check admin status
+      // We need to wait for it to update
       setTimeout(() => {
         setIsSubmitting(false);
-        navigate('/admin');
-      }, 1000);
-    } else {
-      // Error: Invalid credentials
+      }, 2000);
+
+    } catch (err) {
       setIsSubmitting(false);
-      setError('Invalid Admin ID or Password. Please try again.');
+      setError('An unexpected error occurred. Please try again.');
       toast({
-        title: "Login Failed",
-        description: "Invalid admin credentials",
+        title: "Error",
+        description: "An unexpected error occurred",
         variant: "destructive",
       });
     }
   };
+
+  // Watch for admin status changes after login
+  useEffect(() => {
+    if (user && !loading) {
+      if (isAdmin) {
+        toast({
+          title: "Login Successful!",
+          description: "Welcome, Admin! Redirecting to dashboard...",
+        });
+        navigate('/admin');
+      } else if (user && !isAdmin && !isSubmitting) {
+        // User is logged in but not an admin
+        setError('You do not have admin privileges. Please contact an administrator.');
+        toast({
+          title: "Access Denied",
+          description: "This account does not have admin privileges.",
+          variant: "destructive",
+        });
+      }
+    }
+  }, [user, isAdmin, loading, navigate, isSubmitting]);
 
   return (
     <div className="min-h-screen bg-gradient-soft flex items-center justify-center p-4">
@@ -67,18 +113,18 @@ const AdminLogin = () => {
 
         {/* Login Form */}
         <form onSubmit={handleLogin} className="space-y-4">
-          {/* Admin ID Input */}
+          {/* Email Input */}
           <div className="space-y-2">
-            <Label htmlFor="admin-id" className="flex items-center gap-2">
-              <User className="h-4 w-4" />
-              Admin ID
+            <Label htmlFor="admin-email" className="flex items-center gap-2">
+              <Mail className="h-4 w-4" />
+              Email Address
             </Label>
             <Input
-              id="admin-id"
-              type="text"
-              value={form.adminId}
-              onChange={(e) => setForm({ ...form, adminId: e.target.value })}
-              placeholder="Enter admin ID"
+              id="admin-email"
+              type="email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              placeholder="Enter your admin email"
               className="h-11"
               required
             />
@@ -96,7 +142,7 @@ const AdminLogin = () => {
                 type={showPassword ? 'text' : 'password'}
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
-                placeholder="Enter password"
+                placeholder="Enter your password"
                 className="h-11 pr-10"
                 required
               />
@@ -120,7 +166,7 @@ const AdminLogin = () => {
           )}
           
           {/* Submit Button */}
-          <Button type="submit" className="w-full h-11" disabled={isSubmitting}>
+          <Button type="submit" className="w-full h-11" disabled={isSubmitting || loading}>
             {isSubmitting ? 'Authenticating...' : 'Login as Admin'}
           </Button>
         </form>
@@ -135,11 +181,11 @@ const AdminLogin = () => {
           </p>
         </div>
 
-        {/* Demo Credentials Hint */}
+        {/* Security Notice */}
         <div className="mt-4 p-3 bg-muted/50 rounded-lg">
           <p className="text-xs text-muted-foreground text-center">
-            <strong>Demo:</strong> Admin ID: <code className="bg-muted px-1 rounded">admin</code> | 
-            Password: <code className="bg-muted px-1 rounded">admin123</code>
+            <strong>Note:</strong> Admin access requires an account with admin privileges in the system.
+            Contact the system administrator if you need access.
           </p>
         </div>
       </Card>
