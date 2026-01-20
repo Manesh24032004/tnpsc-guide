@@ -2,14 +2,23 @@ import { useState, useEffect, createContext, useContext } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
+// Demo credentials for testing purposes
+const DEMO_ADMIN = {
+  id: 'demo-admin',
+  email: 'admin@demo.com',
+  password: 'admin123'
+};
+
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
   isAdmin: boolean;
+  isDemoMode: boolean;
   signUp: (email: string, password: string, name: string) => Promise<{ error: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
+  demoLogin: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -19,6 +28,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isDemoMode, setIsDemoMode] = useState(false);
 
   const checkAdminRole = async (userId: string) => {
     try {
@@ -40,7 +50,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  // Check for demo mode on mount
   useEffect(() => {
+    const demoSession = sessionStorage.getItem('demo_admin_session');
+    if (demoSession === 'true') {
+      setIsDemoMode(true);
+      setIsAdmin(true);
+      setUser({ id: DEMO_ADMIN.id, email: DEMO_ADMIN.email } as User);
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Skip supabase auth if in demo mode
+    if (isDemoMode) return;
+
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
@@ -71,7 +95,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [isDemoMode]);
 
   const signUp = async (email: string, password: string, name: string) => {
     const redirectUrl = `${window.location.origin}/`;
@@ -98,12 +122,28 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signOut = async () => {
+    if (isDemoMode) {
+      sessionStorage.removeItem('demo_admin_session');
+      setIsDemoMode(false);
+      setIsAdmin(false);
+      setUser(null);
+      return;
+    }
     await supabase.auth.signOut();
     setIsAdmin(false);
   };
 
+  // Demo login function for testing
+  const demoLogin = () => {
+    sessionStorage.setItem('demo_admin_session', 'true');
+    setIsDemoMode(true);
+    setIsAdmin(true);
+    setUser({ id: DEMO_ADMIN.id, email: DEMO_ADMIN.email } as User);
+    setLoading(false);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, session, loading, isAdmin, signUp, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, session, loading, isAdmin, isDemoMode, signUp, signIn, signOut, demoLogin }}>
       {children}
     </AuthContext.Provider>
   );
