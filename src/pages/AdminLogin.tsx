@@ -1,27 +1,25 @@
 /**
  * Admin Login Page
  * 
- * This admin login uses secure Supabase authentication.
- * Admin privileges are determined by the user_roles table in the database.
- * RLS policies ensure only admins can perform administrative actions.
+ * Supports both demo mode and secure Supabase authentication.
+ * Demo mode: Use admin@demo.com / admin123 for testing
+ * Production: Uses Supabase auth with user_roles table
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
-import { Shield, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Shield, Mail, Lock, Eye, EyeOff, PlayCircle } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import { useEffect } from 'react';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const { signIn, user, isAdmin, loading } = useAuth();
+  const { signIn, user, isAdmin, loading, demoLogin, isDemoMode } = useAuth();
   
-  // Form state for email and password
   const [form, setForm] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,19 +27,34 @@ const AdminLogin = () => {
 
   // Redirect if already logged in as admin
   useEffect(() => {
-    if (!loading && user && isAdmin) {
+    if (!loading && (user && isAdmin) || isDemoMode) {
       navigate('/admin');
     }
-  }, [user, isAdmin, loading, navigate]);
+  }, [user, isAdmin, loading, isDemoMode, navigate]);
 
-  // Handle login form submission using Supabase authentication
+  // Handle demo login
+  const handleDemoLogin = () => {
+    demoLogin();
+    toast({
+      title: "Demo Mode Activated",
+      description: "Welcome to the Admin Dashboard demo!",
+    });
+    navigate('/admin');
+  };
+
+  // Handle regular login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setIsSubmitting(true);
 
+    // Check for demo credentials
+    if (form.email === 'admin@demo.com' && form.password === 'admin123') {
+      handleDemoLogin();
+      return;
+    }
+
     try {
-      // Authenticate with Supabase
       const { error: signInError } = await signIn(form.email, form.password);
       
       if (signInError) {
@@ -55,14 +68,11 @@ const AdminLogin = () => {
         return;
       }
 
-      // Wait a moment for the auth state to update and check admin role
       toast({
         title: "Checking admin privileges...",
         description: "Please wait while we verify your access.",
       });
 
-      // The useAuth hook will automatically check admin status
-      // We need to wait for it to update
       setTimeout(() => {
         setIsSubmitting(false);
       }, 2000);
@@ -80,7 +90,7 @@ const AdminLogin = () => {
 
   // Watch for admin status changes after login
   useEffect(() => {
-    if (user && !loading) {
+    if (user && !loading && !isDemoMode) {
       if (isAdmin) {
         toast({
           title: "Login Successful!",
@@ -88,7 +98,6 @@ const AdminLogin = () => {
         });
         navigate('/admin');
       } else if (user && !isAdmin && !isSubmitting) {
-        // User is logged in but not an admin
         setError('You do not have admin privileges. Please contact an administrator.');
         toast({
           title: "Access Denied",
@@ -97,7 +106,7 @@ const AdminLogin = () => {
         });
       }
     }
-  }, [user, isAdmin, loading, navigate, isSubmitting]);
+  }, [user, isAdmin, loading, navigate, isSubmitting, isDemoMode]);
 
   return (
     <div className="min-h-screen bg-gradient-soft flex items-center justify-center p-4">
@@ -111,9 +120,33 @@ const AdminLogin = () => {
           <p className="text-sm text-muted-foreground">TNPSC Wizard Administrator Portal</p>
         </div>
 
+        {/* Demo Login Button */}
+        <div className="mb-6">
+          <Button 
+            type="button" 
+            variant="outline" 
+            className="w-full h-12 border-2 border-dashed border-primary/50 hover:border-primary hover:bg-primary/5"
+            onClick={handleDemoLogin}
+          >
+            <PlayCircle className="h-5 w-5 mr-2" />
+            Try Demo Mode (No Login Required)
+          </Button>
+          <p className="text-xs text-center text-muted-foreground mt-2">
+            Click to explore the admin dashboard with sample data
+          </p>
+        </div>
+
+        <div className="relative mb-6">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t border-border" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-card px-2 text-muted-foreground">Or login with credentials</span>
+          </div>
+        </div>
+
         {/* Login Form */}
         <form onSubmit={handleLogin} className="space-y-4">
-          {/* Email Input */}
           <div className="space-y-2">
             <Label htmlFor="admin-email" className="flex items-center gap-2">
               <Mail className="h-4 w-4" />
@@ -124,13 +157,12 @@ const AdminLogin = () => {
               type="email"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
-              placeholder="Enter your admin email"
+              placeholder="admin@demo.com"
               className="h-11"
               required
             />
           </div>
           
-          {/* Password Input with Toggle */}
           <div className="space-y-2">
             <Label htmlFor="admin-password" className="flex items-center gap-2">
               <Lock className="h-4 w-4" />
@@ -142,7 +174,7 @@ const AdminLogin = () => {
                 type={showPassword ? 'text' : 'password'}
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
-                placeholder="Enter your password"
+                placeholder="admin123"
                 className="h-11 pr-10"
                 required
               />
@@ -158,18 +190,24 @@ const AdminLogin = () => {
             </div>
           </div>
 
-          {/* Error Message Display */}
           {error && (
             <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
               <p className="text-sm text-destructive text-center">{error}</p>
             </div>
           )}
           
-          {/* Submit Button */}
           <Button type="submit" className="w-full h-11" disabled={isSubmitting || loading}>
             {isSubmitting ? 'Authenticating...' : 'Login as Admin'}
           </Button>
         </form>
+
+        {/* Demo Credentials Info */}
+        <div className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded-lg">
+          <p className="text-xs text-center text-muted-foreground">
+            <strong>Demo Credentials:</strong><br />
+            Email: admin@demo.com | Password: admin123
+          </p>
+        </div>
 
         {/* Link to User Login */}
         <div className="mt-6 pt-6 border-t border-border">
@@ -178,14 +216,6 @@ const AdminLogin = () => {
             <Button variant="link" className="p-0 h-auto" onClick={() => navigate('/auth')}>
               Login here
             </Button>
-          </p>
-        </div>
-
-        {/* Security Notice */}
-        <div className="mt-4 p-3 bg-muted/50 rounded-lg">
-          <p className="text-xs text-muted-foreground text-center">
-            <strong>Note:</strong> Admin access requires an account with admin privileges in the system.
-            Contact the system administrator if you need access.
           </p>
         </div>
       </Card>

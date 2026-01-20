@@ -1,9 +1,8 @@
 /**
  * Protected Route Component
  * 
- * This component uses server-side authentication via Supabase.
- * Admin status is verified through the user_roles table with RLS policies.
- * Never relies on localStorage or client-side storage for security checks.
+ * Supports both demo mode and Supabase authentication.
+ * Admin status is verified through the user_roles table or demo session.
  */
 
 import { useEffect } from 'react';
@@ -16,14 +15,18 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute = ({ children, requireAdmin = false }: ProtectedRouteProps) => {
-  const { user, loading, isAdmin } = useAuth();
+  const { user, loading, isAdmin, isDemoMode } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!loading) {
+      // Allow demo mode for admin routes
+      if (requireAdmin && isDemoMode) {
+        return; // Allow access
+      }
+
       // Check if user is authenticated
-      if (!user) {
-        // Redirect to appropriate login page
+      if (!user && !isDemoMode) {
         if (requireAdmin) {
           navigate('/admin-login');
         } else {
@@ -33,11 +36,11 @@ export const ProtectedRoute = ({ children, requireAdmin = false }: ProtectedRout
       }
 
       // For admin routes, verify admin role from database
-      if (requireAdmin && !isAdmin) {
+      if (requireAdmin && !isAdmin && !isDemoMode) {
         navigate('/admin-login');
       }
     }
-  }, [user, loading, isAdmin, requireAdmin, navigate]);
+  }, [user, loading, isAdmin, isDemoMode, requireAdmin, navigate]);
 
   // Show loading state while checking authentication
   if (loading) {
@@ -48,13 +51,18 @@ export const ProtectedRoute = ({ children, requireAdmin = false }: ProtectedRout
     );
   }
 
+  // Allow demo mode for admin routes
+  if (requireAdmin && isDemoMode) {
+    return <>{children}</>;
+  }
+
   // Not authenticated
-  if (!user) {
+  if (!user && !isDemoMode) {
     return null;
   }
 
   // For admin routes, user must have admin role
-  if (requireAdmin && !isAdmin) {
+  if (requireAdmin && !isAdmin && !isDemoMode) {
     return null;
   }
 
