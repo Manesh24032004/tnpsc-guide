@@ -21,7 +21,7 @@ export const Footer = () => {
               <h3 className="text-2xl font-bold">TNPSC Wizard</h3>
             </div>
             <p className="text-primary-foreground/90 mb-2">
-              Your magical guide to TNPSC Success!
+              A Smart Digital Learning Platform
             </p>
             <p className="text-sm italic text-primary-foreground/80">
               "கல்வி கற்றால் கவலை தீரும்"
