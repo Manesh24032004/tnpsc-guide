@@ -14,7 +14,7 @@ export const WelcomeCard = () => {
       </div>
       
       <p className="text-base text-primary-foreground/90 mb-4">
-        Your magical guide to TNPSC success
+        A Smart Digital Learning Platform
       </p>
       
       <Link to="/ai-chat">

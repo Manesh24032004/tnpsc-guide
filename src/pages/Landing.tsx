@@ -39,7 +39,7 @@ const carouselImages = [
 ];
 
 const marqueeTexts = [
-  'TNPSC Wizard: A Magical Guide to TNPSC Success!',
+  'TNPSC Wizard - A Smart Digital Learning Platform',
   'TNPSC | UPSC | RRB',
   'உங்கள் வெற்றிக்கான வழிகாட்டி!',
   'Group 1 | Group 2 | Group 4',
@@ -174,7 +174,7 @@ export const Landing = () => {
                   Welcome to <span className="text-primary">TNPSC Wizard</span>
                 </h1>
                 <p className="text-muted-foreground text-base md:text-lg">
-                  Your complete guide to government job success
+                  A Smart Digital Learning Platform
                 </p>
               </div>
 
