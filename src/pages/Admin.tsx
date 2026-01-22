@@ -17,7 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { useDocuments } from '@/hooks/useDocuments';
-import BackButton from '@/components/BackButton';
+import { BackButton } from '@/components/BackButton';
 import {
   Shield, Upload, FileText, Trash2, Eye, Download, Users, BarChart3,
   Edit, LogOut, Plus, BookOpen, FileCheck, TrendingUp, Calendar, AlertCircle
