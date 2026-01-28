@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   BookOpen, FileText, GraduationCap, BookMarked, Users, 
-  Brain, Bot, Edit, Settings, ArrowRight
+  Brain, Bot, Edit, Settings, ArrowRight, Scroll
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -13,6 +13,8 @@ interface ContentModulesProps {
     books: number;
     papers: number;
     notes: number;
+    tirukural: number;
+    tamilScholars: number;
   };
   onManageClick: (category: string) => void;
 }
@@ -53,17 +55,19 @@ export const ContentModules = ({ fileCounts, onManageClick }: ContentModulesProp
     },
     {
       title: 'திருக்குறள்',
-      description: '20 அதிகாரங்கள்',
-      icon: BookMarked,
+      description: 'Tirukural PDFs',
+      icon: Scroll,
       href: '/tirukural',
-      adminAction: 'Manage Chapters',
+      count: fileCounts.tirukural,
+      category: 'Tirukural',
     },
     {
       title: 'Tamil Scholars',
-      description: '20+ அறிஞர்கள்',
+      description: 'தமிழ் அறிஞர்கள்',
       icon: Users,
       href: '/poets',
-      adminAction: 'Manage Poets',
+      count: fileCounts.tamilScholars,
+      category: 'Tamil Scholars',
     },
     {
       title: 'Previous Papers',
@@ -79,15 +83,15 @@ export const ContentModules = ({ fileCounts, onManageClick }: ContentModulesProp
       icon: GraduationCap,
       href: '/books/standards',
       count: fileCounts.books,
-      category: 'Books',
+      category: 'School Books',
     },
     {
       title: 'Study Notes',
       description: 'Complete Notes',
-      icon: FileText,
+      icon: BookMarked,
       href: '/notes',
       count: fileCounts.notes,
-      category: 'Notes',
+      category: 'Study Notes',
     },
     {
       title: 'TNPSC Quiz',
