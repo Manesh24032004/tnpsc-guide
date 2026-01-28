@@ -4,6 +4,7 @@
  * Comprehensive admin panel with:
  * - Content management (view, upload, edit, delete)
  * - Syllabus management by group
+ * - Image management (logos, Tamil scholars, book covers)
  * - User & activity monitoring
  * - File categorization and control
  * - Demo mode support
@@ -20,9 +21,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { useDocuments } from '@/hooks/useDocuments';
+import { useImages } from '@/hooks/useImages';
 import { 
   LayoutDashboard, FileText, Upload, BookOpen, 
-  BarChart3, Users, FolderOpen
+  BarChart3, Users, FolderOpen, ImageIcon
 } from 'lucide-react';
 
 // Admin Components
@@ -30,6 +32,8 @@ import { AdminHeader } from '@/components/Admin/AdminHeader';
 import { AdminStats } from '@/components/Admin/AdminStats';
 import { FileManager } from '@/components/Admin/FileManager';
 import { FileUploader, UploadFormData } from '@/components/Admin/FileUploader';
+import { ImageUploader, ImageUploadFormData } from '@/components/Admin/ImageUploader';
+import { ImageManager, ImageItem } from '@/components/Admin/ImageManager';
 import { SyllabusManager } from '@/components/Admin/SyllabusManager';
 import { UserMonitoring, ActivityItem } from '@/components/Admin/UserMonitoring';
 import { ContentModules } from '@/components/Admin/ContentModules';
@@ -44,18 +48,22 @@ import {
 const Admin = () => {
   const { isDemoMode } = useAuth();
   const { documents, uploadDocument, updateDocument, deleteDocument, getPublicUrl, refetch } = useDocuments();
+  const { images, uploadImage, deleteImage, getImageUrl, refetch: refetchImages } = useImages();
   
   // State
   const [files, setFiles] = useState<FileItem[]>([]);
+  const [imageList, setImageList] = useState<ImageItem[]>([]);
   const [stats, setStats] = useState<AdminStatsType>(DEMO_STATS);
   const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([]);
   const [isUploading, setIsUploading] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
   
   // Dialog states
   const [editFile, setEditFile] = useState<FileItem | null>(null);
   const [editForm, setEditForm] = useState({ title: '', description: '' });
   const [deleteFile, setDeleteFile] = useState<FileItem | null>(null);
+  const [deleteImageItem, setDeleteImageItem] = useState<ImageItem | null>(null);
   const [uploadPreset, setUploadPreset] = useState<{ category: string; subcategory: string } | null>(null);
 
   // Load data based on mode
@@ -97,6 +105,25 @@ const Admin = () => {
       });
     }
   }, [isDemoMode, documents]);
+
+  // Load images
+  useEffect(() => {
+    if (!isDemoMode && images) {
+      const mappedImages: ImageItem[] = images.map(img => ({
+        id: img.id,
+        title: img.title,
+        description: img.description,
+        category: img.category,
+        subcategory: img.subcategory,
+        file_name: img.file_name,
+        file_path: img.file_path,
+        file_size: img.file_size,
+        created_at: img.created_at,
+        url: img.url,
+      }));
+      setImageList(mappedImages);
+    }
+  }, [isDemoMode, images]);
 
   // Handlers
   const handleUpload = async (uploadedFiles: File[], formData: UploadFormData) => {
@@ -209,6 +236,53 @@ const Admin = () => {
     setActiveTab('files');
   };
 
+  // Image handlers
+  const handleImageUpload = async (uploadedFiles: File[], formData: ImageUploadFormData) => {
+    setIsUploadingImage(true);
+    
+    for (const file of uploadedFiles) {
+      if (isDemoMode) {
+        toast({ title: "Demo Mode", description: `Image "${formData.title}" uploaded (demo)` });
+      } else {
+        try {
+          await uploadImage(file, formData.title, formData.description, formData.category, formData.subcategory);
+        } catch (error) {
+          toast({ title: "Error", description: `Failed to upload ${file.name}`, variant: "destructive" });
+        }
+      }
+    }
+    
+    if (!isDemoMode) await refetchImages();
+    toast({ title: "Success", description: `${uploadedFiles.length} image(s) uploaded successfully` });
+    setIsUploadingImage(false);
+  };
+
+  const handleViewImage = (image: ImageItem) => {
+    if (image.url) {
+      window.open(image.url, '_blank');
+    }
+  };
+
+  const handleEditImage = (image: ImageItem) => {
+    toast({ title: "Info", description: "Image edit - rename by re-uploading" });
+  };
+
+  const handleDeleteImage = async () => {
+    if (!deleteImageItem) return;
+    
+    if (isDemoMode) {
+      toast({ title: "Deleted", description: "Image deleted (Demo Mode)" });
+    } else {
+      try {
+        await deleteImage(deleteImageItem.file_path);
+        await refetchImages();
+      } catch {
+        toast({ title: "Error", description: "Failed to delete image", variant: "destructive" });
+      }
+    }
+    setDeleteImageItem(null);
+  };
+
   // Utility functions
   const formatFileSize = (bytes?: number) => {
     if (!bytes) return 'N/A';
@@ -254,6 +328,10 @@ const Admin = () => {
               <FolderOpen className="h-4 w-4" />
               <span className="hidden sm:inline">All Files</span>
             </TabsTrigger>
+            <TabsTrigger value="images" className="gap-2 data-[state=active]:bg-background">
+              <ImageIcon className="h-4 w-4" />
+              <span className="hidden sm:inline">Images</span>
+            </TabsTrigger>
             <TabsTrigger value="upload" className="gap-2 data-[state=active]:bg-background">
               <Upload className="h-4 w-4" />
               <span className="hidden sm:inline">Upload</span>
@@ -294,13 +372,29 @@ const Admin = () => {
             />
           </TabsContent>
 
-          {/* Upload Tab */}
-          <TabsContent value="upload">
+          {/* Upload Tab - Files and Images */}
+          <TabsContent value="upload" className="space-y-6">
             <FileUploader
               categories={CATEGORIES}
               subcategories={SUBCATEGORIES}
               onUpload={handleUpload}
               isUploading={isUploading}
+            />
+            <ImageUploader
+              onUpload={handleImageUpload}
+              isUploading={isUploadingImage}
+            />
+          </TabsContent>
+
+          {/* Images Tab */}
+          <TabsContent value="images">
+            <ImageManager
+              images={imageList}
+              onView={handleViewImage}
+              onEdit={handleEditImage}
+              onDelete={setDeleteImageItem}
+              formatFileSize={formatFileSize}
+              formatDate={formatDate}
             />
           </TabsContent>
 
@@ -367,7 +461,7 @@ const Admin = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirmation */}
+      {/* Delete File Confirmation */}
       <AlertDialog open={!!deleteFile} onOpenChange={() => setDeleteFile(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -379,6 +473,24 @@ const Admin = () => {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Delete Image Confirmation */}
+      <AlertDialog open={!!deleteImageItem} onOpenChange={() => setDeleteImageItem(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Image?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete "{deleteImageItem?.title}"? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteImage} className="bg-destructive text-destructive-foreground">
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>

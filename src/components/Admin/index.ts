@@ -5,3 +5,5 @@ export { FileUploader } from './FileUploader';
 export { SyllabusManager } from './SyllabusManager';
 export { UserMonitoring } from './UserMonitoring';
 export { ContentModules } from './ContentModules';
+export { ImageUploader } from './ImageUploader';
+export { ImageManager } from './ImageManager';
