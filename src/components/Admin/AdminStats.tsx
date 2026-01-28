@@ -1,7 +1,7 @@
 import { Card } from '@/components/ui/card';
 import { 
   Users, Download, FileCheck, BookOpen, FileText, 
-  TrendingUp, Eye, Upload 
+  TrendingUp, Eye, Upload, Scroll, GraduationCap
 } from 'lucide-react';
 
 interface StatsData {
@@ -13,6 +13,8 @@ interface StatsData {
   booksDownloads: number;
   papersDownloads: number;
   notesDownloads: number;
+  tirukuralDownloads?: number;
+  tamilScholarsDownloads?: number;
 }
 
 interface AdminStatsProps {
@@ -26,13 +28,15 @@ export const AdminStats = ({ stats }: AdminStatsProps) => {
     { label: 'Total Downloads', value: stats.totalDownloads, icon: Download, bgColor: 'bg-green-100 dark:bg-green-900', iconColor: 'text-green-600 dark:text-green-400' },
     { label: 'Total Uploads', value: stats.totalUploads, icon: Upload, bgColor: 'bg-cyan-100 dark:bg-cyan-900', iconColor: 'text-cyan-600 dark:text-cyan-400' },
     { label: 'Syllabus', value: stats.syllabusDownloads, icon: FileCheck, bgColor: 'bg-purple-100 dark:bg-purple-900', iconColor: 'text-purple-600 dark:text-purple-400' },
-    { label: 'Books', value: stats.booksDownloads, icon: BookOpen, bgColor: 'bg-orange-100 dark:bg-orange-900', iconColor: 'text-orange-600 dark:text-orange-400' },
+    { label: 'Books', value: stats.booksDownloads, icon: GraduationCap, bgColor: 'bg-orange-100 dark:bg-orange-900', iconColor: 'text-orange-600 dark:text-orange-400' },
     { label: 'Papers', value: stats.papersDownloads, icon: FileText, bgColor: 'bg-red-100 dark:bg-red-900', iconColor: 'text-red-600 dark:text-red-400' },
     { label: 'Notes', value: stats.notesDownloads, icon: TrendingUp, bgColor: 'bg-teal-100 dark:bg-teal-900', iconColor: 'text-teal-600 dark:text-teal-400' },
+    { label: 'Tirukural', value: stats.tirukuralDownloads || 0, icon: Scroll, bgColor: 'bg-amber-100 dark:bg-amber-900', iconColor: 'text-amber-600 dark:text-amber-400' },
+    { label: 'Scholars', value: stats.tamilScholarsDownloads || 0, icon: BookOpen, bgColor: 'bg-rose-100 dark:bg-rose-900', iconColor: 'text-rose-600 dark:text-rose-400' },
   ];
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-3">
       {statCards.map((stat) => {
         const Icon = stat.icon;
         return (

@@ -101,6 +101,33 @@ export const useDocuments = (category?: string) => {
     }
   };
 
+  const updateDocument = async (docId: string, updates: { title?: string; description?: string }) => {
+    try {
+      const { error } = await supabase
+        .from('documents')
+        .update(updates)
+        .eq('id', docId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Updated",
+        description: "Document updated successfully.",
+      });
+      
+      await fetchDocuments();
+      return true;
+    } catch (error: any) {
+      console.error('Error updating document:', error);
+      toast({
+        title: "Update Failed",
+        description: error.message || "Failed to update document.",
+        variant: "destructive",
+      });
+      return false;
+    }
+  };
+
   const deleteDocument = async (doc: Document) => {
     try {
       // Delete from storage
@@ -159,6 +186,7 @@ export const useDocuments = (category?: string) => {
     documents,
     loading,
     uploadDocument,
+    updateDocument,
     deleteDocument,
     getPublicUrl,
     incrementDownload,

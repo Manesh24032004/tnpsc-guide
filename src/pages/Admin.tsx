@@ -43,7 +43,7 @@ import {
 
 const Admin = () => {
   const { isDemoMode } = useAuth();
-  const { documents, uploadDocument, deleteDocument, getPublicUrl, refetch } = useDocuments();
+  const { documents, uploadDocument, updateDocument, deleteDocument, getPublicUrl, refetch } = useDocuments();
   
   // State
   const [files, setFiles] = useState<FileItem[]>([]);
@@ -89,9 +89,11 @@ const Admin = () => {
         totalUploads: documents.length,
         totalUsers: 1856,
         syllabusDownloads: documents.filter(d => d.category === 'Syllabus').reduce((sum, d) => sum + (d.download_count || 0), 0),
-        booksDownloads: documents.filter(d => d.category === 'Books').reduce((sum, d) => sum + (d.download_count || 0), 0),
+        booksDownloads: documents.filter(d => d.category === 'School Books').reduce((sum, d) => sum + (d.download_count || 0), 0),
         papersDownloads: documents.filter(d => d.category === 'Previous Papers').reduce((sum, d) => sum + (d.download_count || 0), 0),
-        notesDownloads: documents.filter(d => d.category === 'Notes').reduce((sum, d) => sum + (d.download_count || 0), 0),
+        notesDownloads: documents.filter(d => d.category === 'Study Notes').reduce((sum, d) => sum + (d.download_count || 0), 0),
+        tirukuralDownloads: documents.filter(d => d.category === 'Tirukural').reduce((sum, d) => sum + (d.download_count || 0), 0),
+        tamilScholarsDownloads: documents.filter(d => d.category === 'Tamil Scholars').reduce((sum, d) => sum + (d.download_count || 0), 0),
       });
     }
   }, [isDemoMode, documents]);
@@ -141,7 +143,7 @@ const Admin = () => {
     }
   };
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
     if (!editFile) return;
     
     if (isDemoMode) {
@@ -152,8 +154,15 @@ const Admin = () => {
       ));
       toast({ title: "Updated", description: "File details updated (Demo Mode)" });
     } else {
-      // In production, would update via Supabase
-      toast({ title: "Updated", description: "File details updated" });
+      try {
+        await updateDocument(editFile.id, { 
+          title: editForm.title, 
+          description: editForm.description 
+        });
+        await refetch();
+      } catch {
+        toast({ title: "Error", description: "Failed to update file", variant: "destructive" });
+      }
     }
     setEditFile(null);
   };
@@ -219,9 +228,11 @@ const Admin = () => {
   // Calculate file counts by category
   const fileCounts = {
     syllabus: files.filter(f => f.category === 'Syllabus').length,
-    books: files.filter(f => f.category === 'Books').length,
+    books: files.filter(f => f.category === 'School Books').length,
     papers: files.filter(f => f.category === 'Previous Papers').length,
-    notes: files.filter(f => f.category === 'Notes').length,
+    notes: files.filter(f => f.category === 'Study Notes').length,
+    tirukural: files.filter(f => f.category === 'Tirukural').length,
+    tamilScholars: files.filter(f => f.category === 'Tamil Scholars').length,
   };
 
   return (
